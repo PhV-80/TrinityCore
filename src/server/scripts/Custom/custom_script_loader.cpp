@@ -19,6 +19,10 @@
 
 // The name of this function should match:
 // void Add${NameOfDirectory}Scripts()
+/// Vorwärtsdeklaration deiner Script-Funktion
+void AddSC_npc_autonomous_player();
+
 void AddCustomScripts()
 {
+    AddSC_npc_autonomous_player();
 }
