@@ -15,14 +15,10 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-// This is where scripts' loading functions should be declared:
+ // This is where scripts' loading functions should be declared:
 
-// The name of this function should match:
-// void Add${NameOfDirectory}Scripts()
-/// Vorwärtsdeklaration deiner Script-Funktion
-void AddSC_npc_autonomous_player();
-
+ // The name of this function should match:
+ // void Add${NameOfDirectory}Scripts()
 void AddCustomScripts()
 {
-    AddSC_npc_autonomous_player();
 }

@@ -29,6 +29,9 @@
 
 #include "MovementGenerator.h"
 
+// Custom AI
+#include "AutonomousNPC/AutonomousPlayerAI.h"
+
 namespace AIRegistry
 {
     void Initialize()
@@ -48,6 +51,7 @@ namespace AIRegistry
         (new CreatureAIFactory<VehicleAI>("VehicleAI"))->RegisterSelf();
         (new CreatureAIFactory<SmartAI>("SmartAI"))->RegisterSelf();
         (new CreatureAIFactory<ScheduledChangeAI, false>("ScheduledChangeAI"))->RegisterSelf();
+        (new CreatureAIFactory<AutonomousPlayerAI>("AutonomousPlayerAI"))->RegisterSelf();
 
         (new GameObjectAIFactory<NullGameObjectAI>("NullGameObjectAI"))->RegisterSelf();
         (new GameObjectAIFactory<GameObjectAI>("GameObjectAI"))->RegisterSelf();
