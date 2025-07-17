@@ -12,8 +12,8 @@ DELETE FROM `creature` WHERE `guid` = 250001;
 -- ===================================
 DELETE FROM `creature_loot_template` WHERE `entry` = 90005;
 
--- Grundloot für den Händler
-REPLACE INTO `creature_loot_template` (`entry`, `item`, `Chance`) VALUES
+-- Grundloot für den Händler (nur garantierte Spalten)
+INSERT INTO `creature_loot_template` (`entry`, `item`, `Chance`) VALUES
 (90005, 25, 100),   -- Silber (100% Chance)
 (90005, 2589, 75),  -- Leinenstoff (75% Chance)
 (90005, 2592, 50),  -- Wollstoff (50% Chance)
