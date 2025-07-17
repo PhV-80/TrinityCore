@@ -48,6 +48,25 @@ constexpr uint32 ROLE_MASTERY_MIN_LEVEL = 21;
 constexpr float COMBAT_ENGAGE_DISTANCE = 30.0f;
 constexpr float SOCIAL_INTERACTION_DISTANCE = 15.0f;
 
+// Permissible - Required for AI Factory Registration
+int32 AutonomousPlayerAI::Permissible(Creature const* creature)
+{
+    // Allow this AI for any creature with AIName "AutonomousPlayerAI"
+    if (!creature)
+        return PERMIT_BASE_NO;
+        
+    // Check if this creature has the AutonomousPlayerAI configured
+    if (creature->GetAIName() == "AutonomousPlayerAI")
+        return PERMIT_BASE_SPECIAL;
+        
+    // Also allow for specific creature entries (90001-90010)
+    uint32 entry = creature->GetEntry();
+    if (entry >= 90001 && entry <= 90010)
+        return PERMIT_BASE_SPECIAL;
+        
+    return PERMIT_BASE_NO;
+}
+
 AutonomousPlayerAI::AutonomousPlayerAI(Creature* creature) : CreatureAI(creature),
     m_currentPhase(LearningPhase::PHASE_INITIALIZATION),
     m_currentState(BehaviorState::STATE_IDLE),
