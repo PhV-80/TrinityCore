@@ -68,6 +68,12 @@ CREATE TABLE IF NOT EXISTS `autonomous_npc_combat_history` (
 -- NPC Templates (Exakt für Ihre DB-Struktur)
 -- ===================================
 
+-- Lösche existierende Einträge falls vorhanden
+DELETE FROM `creature_template` WHERE `entry` BETWEEN 90001 AND 90010;
+DELETE FROM `creature` WHERE `id` BETWEEN 90001 AND 90010;
+DELETE FROM `creature_loot_template` WHERE `entry` BETWEEN 90001 AND 90010;
+
+-- Erstelle NPCs neu
 INSERT INTO `creature_template` (
   `entry`, `name`, `subname`, `modelid1`, `modelid2`, `modelid3`, `modelid4`,
   `minlevel`, `maxlevel`, `exp`, `faction`, `npcflag`, 
@@ -132,7 +138,8 @@ INSERT INTO `creature_template` (
 -- Erweiterte NPCs (Horde/Neutral)
 -- ===================================
 
-INSERT INTO `creature_template` (
+-- Erweiterte NPCs (ersetze falls vorhanden)
+REPLACE INTO `creature_template` (
   `entry`, `name`, `subname`, `modelid1`,
   `minlevel`, `maxlevel`, `faction`, `unit_class`,
   `HealthModifier`, `ManaModifier`, `ArmorModifier`, `DamageModifier`,
@@ -150,7 +157,8 @@ INSERT INTO `creature_template` (
 -- Spawn-Punkte
 -- ===================================
 
-INSERT INTO `creature` (`id`, `map`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`) VALUES
+-- Spawn-Punkte (ersetze falls vorhanden)  
+REPLACE INTO `creature` (`id`, `map`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`) VALUES
 -- Basis NPCs (Elwynn Forest)
 (90001, 0, -9449.06, -1346.62, 46.27, 4.71, 300),  -- Autonomer Krieger bei Goldshire
 (90002, 0, -9789.17, -943.19, 41.78, 1.57, 300),   -- Autonomer Magier beim Kristallsee
@@ -162,7 +170,8 @@ INSERT INTO `creature` (`id`, `map`, `position_x`, `position_y`, `position_z`, `
 -- Loot-Tabellen
 -- ===================================
 
-INSERT INTO `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `lootmode`, `groupid`, `mincountOrRef`, `maxcount`) VALUES
+-- Loot-Tabellen (ersetze falls vorhanden)
+REPLACE INTO `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `lootmode`, `groupid`, `mincountOrRef`, `maxcount`) VALUES
 (90001, 25, 100, 1, 0, 1, 4),  -- Silber
 (90002, 25, 100, 1, 0, 1, 4),
 (90003, 25, 100, 1, 0, 1, 4),
