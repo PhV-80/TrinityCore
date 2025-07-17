@@ -1,19 +1,47 @@
 # 🔧 TrinityCore 3.3.5a Kompatibilitäts-Fix
 
-## ❌ Problem: `creature_template_stats` existiert nicht
+## ❌ Problem: Datenbankfehler bei TrinityCore 3.3.5a
 
-**Fehlermeldung:**
+**Fehlermeldungen:**
 ```
 #1146 - Tabelle 'wotlk_world.creature_template_stats' existiert nicht
+#1054 - Unbekanntes Tabellenfeld 'minhealth' in INSERT INTO
+#1054 - Unbekanntes Tabellenfeld 'faction_A' in INSERT INTO
 ```
 
 ## ✅ Lösung
 
-Die Tabelle `creature_template_stats` wurde erst in neueren TrinityCore-Versionen eingeführt. In TrinityCore 3.3.5a werden alle Stat-Informationen direkt in der `creature_template` Tabelle gespeichert.
+TrinityCore 3.3.5a hat eine andere Datenbankstruktur als neuere Versionen:
 
-### 🔄 Was wurde geändert
+1. **`creature_template_stats`** existiert nicht - Stats sind in `creature_template` integriert
+2. **Spaltennamen unterscheiden sich** zwischen verschiedenen 3.3.5a-Builds
+3. **Verschiedene Commits** haben unterschiedliche Strukturen
 
-Das SQL-Skript wurde aktualisiert und verwendet jetzt:
+### 🔧 Drei Lösungsansätze:
+
+#### 🎯 Empfohlene Lösung: Minimales SQL-Skript
+
+**Verwende:** `sql/autonomous_npc_setup_minimal.sql`
+
+Dieses Skript:
+- Verwendet nur garantiert existierende Spalten
+- Ignoriert Fehler bei optionalen Spalten
+- Funktioniert mit allen TrinityCore 3.3.5a-Varianten
+
+```bash
+mysql -u root -p world < sql/autonomous_npc_setup_minimal.sql
+```
+
+#### 🔍 Alternative: Manuelle Anpassung
+
+1. **Prüfe deine DB-Struktur:**
+```sql
+DESCRIBE creature_template;
+```
+
+2. **Passe SQL entsprechend an** - verwende nur existierende Spalten
+
+#### 📋 Was wurde allgemein geändert:
 
 #### Vorher (fehlerhaft für 3.3.5a):
 ```sql
