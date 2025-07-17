@@ -26,6 +26,7 @@
 #include "ScheduledChangeAI.h"
 #include "SmartAI.h"
 #include "TotemAI.h"
+#include "AutonomousNPC/AutonomousPlayerAI.h"
 
 #include "MovementGenerator.h"
 
@@ -48,6 +49,7 @@ namespace AIRegistry
         (new CreatureAIFactory<VehicleAI>("VehicleAI"))->RegisterSelf();
         (new CreatureAIFactory<SmartAI>("SmartAI"))->RegisterSelf();
         (new CreatureAIFactory<ScheduledChangeAI, false>("ScheduledChangeAI"))->RegisterSelf();
+        (new CreatureAIFactory<AutonomousPlayerAI>("AutonomousPlayerAI"))->RegisterSelf();
 
         (new GameObjectAIFactory<NullGameObjectAI>("NullGameObjectAI"))->RegisterSelf();
         (new GameObjectAIFactory<GameObjectAI>("GameObjectAI"))->RegisterSelf();
