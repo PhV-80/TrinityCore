@@ -116,6 +116,9 @@ class TC_GAME_API AutonomousPlayerAI : public CreatureAI
         explicit AutonomousPlayerAI(Creature* creature);
         virtual ~AutonomousPlayerAI();
 
+        // Required for AI Factory Registration
+        static int32 Permissible(Creature const* creature);
+
         // Basis CreatureAI Overrides
         void Reset() override;
         void UpdateAI(uint32 diff) override;
