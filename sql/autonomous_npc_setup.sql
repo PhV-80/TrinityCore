@@ -71,50 +71,45 @@ CREATE TABLE IF NOT EXISTS `autonomous_npc_combat_history` (
 -- Test-NPCs für autonome KI
 -- ===================================
 
--- Beispiel NPC Template
-REPLACE INTO `creature_template` (`entry`, `name`, `subname`, `modelid1`, `unit_class`, `unit_flags`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `dmgschool`, `BaseAttackTime`, `RangeAttackTime`, `unit_flags2`, `AIName`, `ScriptName`) VALUES
-(90001, 'Autonomer Krieger', 'Experimentelle KI', 55, 1, 0, 35, 0, 1.0, 1.14, 1.0, 0, 0, 2000, 2000, 0, 'AutonomousPlayerAI', ''),
-(90002, 'Autonomer Magier', 'Experimentelle KI', 49, 2, 0, 35, 0, 1.0, 1.14, 1.0, 0, 0, 2000, 2000, 0, 'AutonomousPlayerAI', ''),
-(90003, 'Autonomer Heiler', 'Experimentelle KI', 1257, 2, 0, 35, 0, 1.0, 1.14, 1.0, 0, 0, 2000, 2000, 0, 'AutonomousPlayerAI', ''),
-(90004, 'Autonomer Entdecker', 'Experimentelle KI', 1890, 1, 0, 35, 0, 1.0, 1.14, 1.0, 0, 0, 2000, 2000, 0, 'AutonomousPlayerAI', ''),
-(90005, 'Autonomer Händler', 'Experimentelle KI', 9991, 1, 0, 35, 0, 1.0, 1.14, 1.0, 0, 0, 2000, 2000, 0, 'AutonomousPlayerAI', '');
+-- Beispiel NPC Template (TrinityCore 3.3.5a kompatibel)
+REPLACE INTO `creature_template` (
+  `entry`, `name`, `subname`, `modelid1`, `modelid2`, `modelid3`, `modelid4`,
+  `faction`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`,
+  `armor`, `mindmg`, `maxdmg`, `attackpower`, `dmg_multiplier`, `baseattacktime`, `rangeattacktime`,
+  `unit_class`, `unit_flags`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `dmgschool`,
+  `AIName`, `ScriptName`
+) VALUES
+(90001, 'Autonomer Krieger', 'Experimentelle KI', 55, 0, 0, 0,
+ 35, 1, 20, 100, 680, 0, 0,
+ 15, 8, 12, 18, 1.0, 2000, 2000,
+ 1, 0, 0, 1.0, 1.14, 1.0, 0, 0,
+ 'AutonomousPlayerAI', ''),
 
--- Grundlegende Stat-Templates für die Test-NPCs
-REPLACE INTO `creature_template_stats` (`entry`, `level`, `hp`, `mana`, `armor`, `str`, `agi`, `sta`, `inte`, `spi`) VALUES
--- Krieger (90001) - Tank-orientiert
-(90001, 1, 100, 0, 15, 18, 14, 17, 11, 13),
-(90001, 5, 180, 0, 45, 22, 16, 21, 13, 15),
-(90001, 10, 320, 0, 85, 28, 20, 27, 15, 17),
-(90001, 15, 480, 0, 135, 34, 24, 33, 17, 19),
-(90001, 20, 680, 0, 195, 42, 28, 41, 19, 21),
+(90002, 'Autonomer Magier', 'Experimentelle KI', 49, 0, 0, 0,
+ 35, 1, 20, 60, 390, 150, 850,
+ 8, 6, 10, 12, 1.2, 2000, 2000,
+ 2, 0, 0, 1.0, 1.14, 1.0, 0, 0,
+ 'AutonomousPlayerAI', ''),
 
--- Magier (90002) - DPS-orientiert
-(90002, 1, 60, 150, 8, 12, 13, 14, 20, 16),
-(90002, 5, 110, 280, 24, 14, 15, 16, 26, 20),
-(90002, 10, 190, 450, 44, 16, 17, 18, 34, 26),
-(90002, 15, 280, 640, 70, 18, 19, 20, 42, 32),
-(90002, 20, 390, 850, 100, 20, 21, 22, 52, 40),
+(90003, 'Autonomer Heiler', 'Experimentelle KI', 1257, 0, 0, 0,
+ 35, 1, 20, 80, 500, 130, 750,
+ 10, 5, 8, 13, 0.8, 2000, 2000,
+ 2, 0, 0, 1.0, 1.14, 1.0, 0, 0,
+ 'AutonomousPlayerAI', ''),
 
--- Heiler (90003) - Heiler-orientiert
-(90003, 1, 80, 130, 10, 13, 12, 15, 18, 19),
-(90003, 5, 140, 240, 30, 15, 14, 17, 24, 25),
-(90003, 10, 240, 390, 55, 17, 16, 19, 32, 33),
-(90003, 15, 360, 560, 85, 19, 18, 21, 40, 41),
-(90003, 20, 500, 750, 120, 21, 20, 23, 50, 51),
+(90004, 'Autonomer Entdecker', 'Experimentelle KI', 1890, 0, 0, 0,
+ 35, 1, 20, 90, 580, 80, 440,
+ 12, 7, 11, 15, 1.0, 2000, 2000,
+ 1, 0, 0, 1.0, 1.14, 1.0, 0, 0,
+ 'AutonomousPlayerAI', ''),
 
--- Entdecker (90004) - Ausgewogen
-(90004, 1, 90, 80, 12, 15, 16, 16, 14, 15),
-(90004, 5, 160, 140, 36, 19, 20, 20, 16, 17),
-(90004, 10, 280, 220, 65, 25, 26, 26, 18, 19),
-(90004, 15, 420, 320, 100, 31, 32, 32, 20, 21),
-(90004, 20, 580, 440, 140, 39, 40, 40, 22, 23),
+(90005, 'Autonomer Händler', 'Experimentelle KI', 9991, 0, 0, 0,
+ 35, 1, 20, 85, 540, 100, 540,
+ 11, 6, 9, 14, 0.9, 2000, 2000,
+ 1, 0, 0, 1.0, 1.14, 1.0, 0, 0,
+ 'AutonomousPlayerAI', '');
 
--- Händler (90005) - Sozial-orientiert
-(90005, 1, 85, 100, 11, 14, 15, 15, 16, 17),
-(90005, 5, 150, 180, 33, 16, 17, 17, 20, 21),
-(90005, 10, 260, 280, 60, 18, 19, 19, 26, 27),
-(90005, 15, 390, 400, 92, 20, 21, 21, 32, 33),
-(90005, 20, 540, 540, 130, 22, 23, 23, 40, 41);
+
 
 -- Spawn-Punkte für Test-NPCs (Elwynn Forest - Goldshire Umgebung)
 INSERT INTO `creature` (`id`, `map`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`) VALUES
@@ -204,16 +199,45 @@ INSERT INTO `creature` (`id`, `map`, `position_x`, `position_y`, `position_z`, `
 -- Erweiterte NPC-Einstellungen
 -- ===================================
 
--- Zusätzliche NPC-Varianten für verschiedene Fraktionen
-REPLACE INTO `creature_template` (`entry`, `name`, `subname`, `modelid1`, `unit_class`, `unit_flags`, `faction`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `dmgschool`, `BaseAttackTime`, `RangeAttackTime`, `unit_flags2`, `AIName`, `ScriptName`) VALUES
+-- Zusätzliche NPC-Varianten für verschiedene Fraktionen (TrinityCore 3.3.5a kompatibel)
+REPLACE INTO `creature_template` (
+  `entry`, `name`, `subname`, `modelid1`, `modelid2`, `modelid3`, `modelid4`,
+  `faction`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`,
+  `armor`, `mindmg`, `maxdmg`, `attackpower`, `dmg_multiplier`, `baseattacktime`, `rangeattacktime`,
+  `unit_class`, `unit_flags`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `dmgschool`,
+  `AIName`, `ScriptName`
+) VALUES
 -- Horde-Versionen
-(90006, 'Autonomer Ork-Krieger', 'Experimentelle KI', 17, 1, 0, 85, 0, 1.0, 1.14, 1.0, 0, 0, 2000, 2000, 0, 'AutonomousPlayerAI', ''),
-(90007, 'Autonomer Untoten-Magier', 'Experimentelle KI', 57, 2, 0, 85, 0, 1.0, 1.14, 1.0, 0, 0, 2000, 2000, 0, 'AutonomousPlayerAI', ''),
-(90008, 'Autonomer Tauren-Schamane', 'Experimentelle KI', 59, 2, 0, 85, 0, 1.0, 1.14, 1.0, 0, 0, 2000, 2000, 0, 'AutonomousPlayerAI', ''),
+(90006, 'Autonomer Ork-Krieger', 'Experimentelle KI', 17, 0, 0, 0,
+ 85, 1, 20, 100, 680, 0, 0,
+ 15, 8, 12, 18, 1.0, 2000, 2000,
+ 1, 0, 0, 1.0, 1.14, 1.0, 0, 0,
+ 'AutonomousPlayerAI', ''),
+
+(90007, 'Autonomer Untoten-Magier', 'Experimentelle KI', 57, 0, 0, 0,
+ 85, 1, 20, 60, 390, 150, 850,
+ 8, 6, 10, 12, 1.2, 2000, 2000,
+ 2, 0, 0, 1.0, 1.14, 1.0, 0, 0,
+ 'AutonomousPlayerAI', ''),
+
+(90008, 'Autonomer Tauren-Schamane', 'Experimentelle KI', 59, 0, 0, 0,
+ 85, 1, 20, 80, 500, 130, 750,
+ 10, 5, 8, 13, 0.8, 2000, 2000,
+ 2, 0, 0, 1.0, 1.14, 1.0, 0, 0,
+ 'AutonomousPlayerAI', ''),
 
 -- Neutrale Versionen
-(90009, 'Autonomer Goblin-Händler', 'Experimentelle KI', 1141, 1, 0, 35, 0, 1.0, 1.14, 1.0, 0, 0, 2000, 2000, 0, 'AutonomousPlayerAI', ''),
-(90010, 'Autonomer Gnom-Erfinder', 'Experimentelle KI', 1563, 2, 0, 35, 0, 1.0, 1.14, 1.0, 0, 0, 2000, 2000, 0, 'AutonomousPlayerAI', '');
+(90009, 'Autonomer Goblin-Händler', 'Experimentelle KI', 1141, 0, 0, 0,
+ 35, 1, 20, 85, 540, 100, 540,
+ 11, 6, 9, 14, 0.9, 2000, 2000,
+ 1, 0, 0, 1.0, 1.14, 1.0, 0, 0,
+ 'AutonomousPlayerAI', ''),
+
+(90010, 'Autonomer Gnom-Erfinder', 'Experimentelle KI', 1563, 0, 0, 0,
+ 35, 1, 20, 60, 390, 150, 850,
+ 8, 6, 10, 12, 1.2, 2000, 2000,
+ 2, 0, 0, 1.0, 1.14, 1.0, 0, 0,
+ 'AutonomousPlayerAI', '');
 
 -- Standard-Loot für autonome NPCs (sie droppen normale Gegenstände wie NPCs ihres Levels)
 REPLACE INTO `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `lootmode`, `groupid`, `mincountOrRef`, `maxcount`) VALUES
