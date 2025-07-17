@@ -210,13 +210,8 @@ INSERT INTO `creature_template` (`entry`, `name`, `subname`, `modelid1`, `factio
 (90009, 'Autonomer Goblin-Händler', 'Experimentelle KI', 1141, 35, 35, 1, 20, 1, 'AutonomousPlayerAI'),
 (90010, 'Autonomer Gnom-Erfinder', 'Experimentelle KI', 1563, 35, 35, 1, 20, 2, 'AutonomousPlayerAI');
 
--- Standard-Loot für autonome NPCs (sie droppen normale Gegenstände wie NPCs ihres Levels)
-REPLACE INTO `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `lootmode`, `groupid`, `mincountOrRef`, `maxcount`) VALUES
-(90001, 25, 100, 1, 0, 1, 4),  -- Silber
-(90002, 25, 100, 1, 0, 1, 4),  -- Silber  
-(90003, 25, 100, 1, 0, 1, 4),  -- Silber
-(90004, 25, 100, 1, 0, 1, 4),  -- Silber
-(90005, 25, 100, 1, 0, 1, 4);  -- Silber
+-- Standard-Loot für autonome NPCs - entfernt wegen Kompatibilitätsproblemen
+-- Verwende: sql/autonomous_npc_safe_loot.sql für Loot-Konfiguration
 
 -- Logging-Kategorie für autonome NPCs
 -- In Log.cpp sollte hinzugefügt werden:

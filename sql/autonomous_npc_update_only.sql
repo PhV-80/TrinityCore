@@ -182,8 +182,8 @@ CREATE TABLE IF NOT EXISTS `autonomous_npc_combat_history` (
   KEY `idx_combat_time` (`combat_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Kampfhistorie autonomer NPCs';
 
--- Loot-Tabellen aktualisieren
-REPLACE INTO `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `lootmode`, `groupid`, `mincountOrRef`, `maxcount`) VALUES
+-- Loot-Tabellen aktualisieren (TrinityCore 3.3.5a korrekte Spalten)
+REPLACE INTO `creature_loot_template` (`entry`, `item`, `Chance`, `lootmode`, `groupid`, `mincountOrRef`, `maxcount`) VALUES
 (90001, 25, 100, 1, 0, 1, 4),  -- Silber
 (90002, 25, 100, 1, 0, 1, 4),
 (90003, 25, 100, 1, 0, 1, 4),

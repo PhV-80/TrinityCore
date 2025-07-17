@@ -170,8 +170,8 @@ REPLACE INTO `creature` (`id`, `map`, `position_x`, `position_y`, `position_z`, 
 -- Loot-Tabellen
 -- ===================================
 
--- Loot-Tabellen (ersetze falls vorhanden)
-REPLACE INTO `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `lootmode`, `groupid`, `mincountOrRef`, `maxcount`) VALUES
+-- Loot-Tabellen (TrinityCore 3.3.5a korrekte Spalten)
+REPLACE INTO `creature_loot_template` (`entry`, `item`, `Chance`, `lootmode`, `groupid`, `mincountOrRef`, `maxcount`) VALUES
 (90001, 25, 100, 1, 0, 1, 4),  -- Silber
 (90002, 25, 100, 1, 0, 1, 4),
 (90003, 25, 100, 1, 0, 1, 4),
