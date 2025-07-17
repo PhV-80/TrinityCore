@@ -31,6 +31,7 @@
 #include "CellImpl.h"
 #include "GridNotifiersImpl.h"
 #include "World.h"
+#include "MotionMaster.h"
 #include <algorithm>
 #include <chrono>
 
