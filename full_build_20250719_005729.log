@@ -1,0 +1,204 @@
+/usr/bin/cmake -S/opt/wow_wotlk/server/source -B/opt/wow_wotlk/server/build --check-build-system CMakeFiles/Makefile.cmake 0
+/usr/bin/cmake -E cmake_progress_start /opt/wow_wotlk/server/build/CMakeFiles /opt/wow_wotlk/server/build//CMakeFiles/progress.marks
+make  -f CMakeFiles/Makefile2 all
+make[1]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+make  -f dep/g3dlite/CMakeFiles/g3dlib.dir/build.make dep/g3dlite/CMakeFiles/g3dlib.dir/depend
+make  -f dep/recastnavigation/Detour/CMakeFiles/Detour.dir/build.make dep/recastnavigation/Detour/CMakeFiles/Detour.dir/depend
+make  -f dep/recastnavigation/Recast/CMakeFiles/Recast.dir/build.make dep/recastnavigation/Recast/CMakeFiles/Recast.dir/depend
+make  -f dep/fmt/CMakeFiles/fmt.dir/build.make dep/fmt/CMakeFiles/fmt.dir/depend
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+cd /opt/wow_wotlk/server/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/wow_wotlk/server/source /opt/wow_wotlk/server/source/dep/recastnavigation/Detour /opt/wow_wotlk/server/build /opt/wow_wotlk/server/build/dep/recastnavigation/Detour /opt/wow_wotlk/server/build/dep/recastnavigation/Detour/CMakeFiles/Detour.dir/DependInfo.cmake --color=
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+cd /opt/wow_wotlk/server/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/wow_wotlk/server/source /opt/wow_wotlk/server/source/dep/recastnavigation/Recast /opt/wow_wotlk/server/build /opt/wow_wotlk/server/build/dep/recastnavigation/Recast /opt/wow_wotlk/server/build/dep/recastnavigation/Recast/CMakeFiles/Recast.dir/DependInfo.cmake --color=
+cd /opt/wow_wotlk/server/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/wow_wotlk/server/source /opt/wow_wotlk/server/source/dep/fmt /opt/wow_wotlk/server/build /opt/wow_wotlk/server/build/dep/fmt /opt/wow_wotlk/server/build/dep/fmt/CMakeFiles/fmt.dir/DependInfo.cmake --color=
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+cd /opt/wow_wotlk/server/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/wow_wotlk/server/source /opt/wow_wotlk/server/source/dep/g3dlite /opt/wow_wotlk/server/build /opt/wow_wotlk/server/build/dep/g3dlite /opt/wow_wotlk/server/build/dep/g3dlite/CMakeFiles/g3dlib.dir/DependInfo.cmake --color=
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make  -f dep/recastnavigation/Detour/CMakeFiles/Detour.dir/build.make dep/recastnavigation/Detour/CMakeFiles/Detour.dir/build
+make  -f dep/recastnavigation/Recast/CMakeFiles/Recast.dir/build.make dep/recastnavigation/Recast/CMakeFiles/Recast.dir/build
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+make[2]: Für das Ziel „dep/recastnavigation/Detour/CMakeFiles/Detour.dir/build“ ist nichts zu tun.
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+make[2]: Für das Ziel „dep/recastnavigation/Recast/CMakeFiles/Recast.dir/build“ ist nichts zu tun.
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make  -f dep/fmt/CMakeFiles/fmt.dir/build.make dep/fmt/CMakeFiles/fmt.dir/build
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make  -f dep/g3dlite/CMakeFiles/g3dlib.dir/build.make dep/g3dlite/CMakeFiles/g3dlib.dir/build
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+make[2]: Für das Ziel „dep/fmt/CMakeFiles/fmt.dir/build“ ist nichts zu tun.
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+[  1%] Built target Detour
+[  1%] Built target Recast
+make  -f dep/SFMT/CMakeFiles/sfmt.dir/build.make dep/SFMT/CMakeFiles/sfmt.dir/depend
+make  -f dep/jemalloc/CMakeFiles/jemalloc.dir/build.make dep/jemalloc/CMakeFiles/jemalloc.dir/depend
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+cd /opt/wow_wotlk/server/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/wow_wotlk/server/source /opt/wow_wotlk/server/source/dep/SFMT /opt/wow_wotlk/server/build /opt/wow_wotlk/server/build/dep/SFMT /opt/wow_wotlk/server/build/dep/SFMT/CMakeFiles/sfmt.dir/DependInfo.cmake --color=
+[  1%] Built target fmt
+make  -f dep/argon2/CMakeFiles/argon2.dir/build.make dep/argon2/CMakeFiles/argon2.dir/depend
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make[2]: Für das Ziel „dep/g3dlite/CMakeFiles/g3dlib.dir/build“ ist nichts zu tun.
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make  -f dep/SFMT/CMakeFiles/sfmt.dir/build.make dep/SFMT/CMakeFiles/sfmt.dir/build
+cd /opt/wow_wotlk/server/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/wow_wotlk/server/source /opt/wow_wotlk/server/source/dep/argon2 /opt/wow_wotlk/server/build /opt/wow_wotlk/server/build/dep/argon2 /opt/wow_wotlk/server/build/dep/argon2/CMakeFiles/argon2.dir/DependInfo.cmake --color=
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+make[2]: Für das Ziel „dep/SFMT/CMakeFiles/sfmt.dir/build“ ist nichts zu tun.
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+cd /opt/wow_wotlk/server/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/wow_wotlk/server/source /opt/wow_wotlk/server/source/dep/jemalloc /opt/wow_wotlk/server/build /opt/wow_wotlk/server/build/dep/jemalloc /opt/wow_wotlk/server/build/dep/jemalloc/CMakeFiles/jemalloc.dir/DependInfo.cmake --color=
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+[  5%] Built target g3dlib
+make  -f dep/argon2/CMakeFiles/argon2.dir/build.make dep/argon2/CMakeFiles/argon2.dir/build
+make  -f dep/gsoap/CMakeFiles/gsoap.dir/build.make dep/gsoap/CMakeFiles/gsoap.dir/depend
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+make[2]: Für das Ziel „dep/argon2/CMakeFiles/argon2.dir/build“ ist nichts zu tun.
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+[  5%] Built target sfmt
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+cd /opt/wow_wotlk/server/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/wow_wotlk/server/source /opt/wow_wotlk/server/source/dep/gsoap /opt/wow_wotlk/server/build /opt/wow_wotlk/server/build/dep/gsoap /opt/wow_wotlk/server/build/dep/gsoap/CMakeFiles/gsoap.dir/DependInfo.cmake --color=
+make  -f dep/libmpq/CMakeFiles/mpq.dir/build.make dep/libmpq/CMakeFiles/mpq.dir/depend
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+cd /opt/wow_wotlk/server/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/wow_wotlk/server/source /opt/wow_wotlk/server/source/dep/libmpq /opt/wow_wotlk/server/build /opt/wow_wotlk/server/build/dep/libmpq /opt/wow_wotlk/server/build/dep/libmpq/CMakeFiles/mpq.dir/DependInfo.cmake --color=
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make  -f dep/jemalloc/CMakeFiles/jemalloc.dir/build.make dep/jemalloc/CMakeFiles/jemalloc.dir/build
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make  -f dep/gsoap/CMakeFiles/gsoap.dir/build.make dep/gsoap/CMakeFiles/gsoap.dir/build
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+make[2]: Für das Ziel „dep/jemalloc/CMakeFiles/jemalloc.dir/build“ ist nichts zu tun.
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+[  6%] Built target argon2
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+make[2]: Für das Ziel „dep/gsoap/CMakeFiles/gsoap.dir/build“ ist nichts zu tun.
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make  -f src/genrev/CMakeFiles/revision_data.h.dir/build.make src/genrev/CMakeFiles/revision_data.h.dir/depend
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make  -f dep/libmpq/CMakeFiles/mpq.dir/build.make dep/libmpq/CMakeFiles/mpq.dir/build
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+cd /opt/wow_wotlk/server/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/wow_wotlk/server/source /opt/wow_wotlk/server/source/src/genrev /opt/wow_wotlk/server/build /opt/wow_wotlk/server/build/src/genrev /opt/wow_wotlk/server/build/src/genrev/CMakeFiles/revision_data.h.dir/DependInfo.cmake --color=
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+make[2]: Für das Ziel „dep/libmpq/CMakeFiles/mpq.dir/build“ ist nichts zu tun.
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+[  7%] Built target gsoap
+[  9%] Built target jemalloc
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make  -f src/genrev/CMakeFiles/revision_data.h.dir/build.make src/genrev/CMakeFiles/revision_data.h.dir/build
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+cd /opt/wow_wotlk/server/source && /usr/bin/cmake -DBUILDDIR="/opt/wow_wotlk/server/build" -P /opt/wow_wotlk/server/source/cmake/genrev.cmake /opt/wow_wotlk/server/build
+[ 10%] Built target mpq
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+[ 10%] Built target revision_data.h
+make  -f src/common/CMakeFiles/common.dir/build.make src/common/CMakeFiles/common.dir/depend
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+cd /opt/wow_wotlk/server/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/wow_wotlk/server/source /opt/wow_wotlk/server/source/src/common /opt/wow_wotlk/server/build /opt/wow_wotlk/server/build/src/common /opt/wow_wotlk/server/build/src/common/CMakeFiles/common.dir/DependInfo.cmake --color=
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make  -f src/common/CMakeFiles/common.dir/build.make src/common/CMakeFiles/common.dir/build
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+make[2]: Für das Ziel „src/common/CMakeFiles/common.dir/build“ ist nichts zu tun.
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+[ 15%] Built target common
+make  -f src/server/database/CMakeFiles/database.dir/build.make src/server/database/CMakeFiles/database.dir/depend
+make  -f src/tools/extractor_common/CMakeFiles/extractor_common.dir/build.make src/tools/extractor_common/CMakeFiles/extractor_common.dir/depend
+make  -f src/tools/vmap4_assembler/CMakeFiles/vmap4assembler.dir/build.make src/tools/vmap4_assembler/CMakeFiles/vmap4assembler.dir/depend
+make  -f src/tools/mmaps_generator/CMakeFiles/mmaps_generator.dir/build.make src/tools/mmaps_generator/CMakeFiles/mmaps_generator.dir/depend
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+cd /opt/wow_wotlk/server/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/wow_wotlk/server/source /opt/wow_wotlk/server/source/src/tools/vmap4_assembler /opt/wow_wotlk/server/build /opt/wow_wotlk/server/build/src/tools/vmap4_assembler /opt/wow_wotlk/server/build/src/tools/vmap4_assembler/CMakeFiles/vmap4assembler.dir/DependInfo.cmake --color=
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+cd /opt/wow_wotlk/server/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/wow_wotlk/server/source /opt/wow_wotlk/server/source/src/tools/extractor_common /opt/wow_wotlk/server/build /opt/wow_wotlk/server/build/src/tools/extractor_common /opt/wow_wotlk/server/build/src/tools/extractor_common/CMakeFiles/extractor_common.dir/DependInfo.cmake --color=
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+cd /opt/wow_wotlk/server/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/wow_wotlk/server/source /opt/wow_wotlk/server/source/src/server/database /opt/wow_wotlk/server/build /opt/wow_wotlk/server/build/src/server/database /opt/wow_wotlk/server/build/src/server/database/CMakeFiles/database.dir/DependInfo.cmake --color=
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+cd /opt/wow_wotlk/server/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/wow_wotlk/server/source /opt/wow_wotlk/server/source/src/tools/mmaps_generator /opt/wow_wotlk/server/build /opt/wow_wotlk/server/build/src/tools/mmaps_generator /opt/wow_wotlk/server/build/src/tools/mmaps_generator/CMakeFiles/mmaps_generator.dir/DependInfo.cmake --color=
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make  -f src/tools/vmap4_assembler/CMakeFiles/vmap4assembler.dir/build.make src/tools/vmap4_assembler/CMakeFiles/vmap4assembler.dir/build
+make  -f src/tools/extractor_common/CMakeFiles/extractor_common.dir/build.make src/tools/extractor_common/CMakeFiles/extractor_common.dir/build
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make  -f src/server/database/CMakeFiles/database.dir/build.make src/server/database/CMakeFiles/database.dir/build
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make  -f src/tools/mmaps_generator/CMakeFiles/mmaps_generator.dir/build.make src/tools/mmaps_generator/CMakeFiles/mmaps_generator.dir/build
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+make[2]: Für das Ziel „src/tools/vmap4_assembler/CMakeFiles/vmap4assembler.dir/build“ ist nichts zu tun.
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+make[2]: Für das Ziel „src/tools/extractor_common/CMakeFiles/extractor_common.dir/build“ ist nichts zu tun.
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+make[2]: Für das Ziel „src/server/database/CMakeFiles/database.dir/build“ ist nichts zu tun.
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+make[2]: Für das Ziel „src/tools/mmaps_generator/CMakeFiles/mmaps_generator.dir/build“ ist nichts zu tun.
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+[ 15%] Built target vmap4assembler
+[ 15%] Built target extractor_common
+make  -f src/tools/map_extractor/CMakeFiles/mapextractor.dir/build.make src/tools/map_extractor/CMakeFiles/mapextractor.dir/depend
+make  -f src/tools/vmap4_extractor/CMakeFiles/vmap4extractor.dir/build.make src/tools/vmap4_extractor/CMakeFiles/vmap4extractor.dir/depend
+[ 17%] Built target database
+make  -f src/server/shared/CMakeFiles/shared.dir/build.make src/server/shared/CMakeFiles/shared.dir/depend
+[ 17%] Built target mmaps_generator
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+cd /opt/wow_wotlk/server/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/wow_wotlk/server/source /opt/wow_wotlk/server/source/src/tools/map_extractor /opt/wow_wotlk/server/build /opt/wow_wotlk/server/build/src/tools/map_extractor /opt/wow_wotlk/server/build/src/tools/map_extractor/CMakeFiles/mapextractor.dir/DependInfo.cmake --color=
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+cd /opt/wow_wotlk/server/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/wow_wotlk/server/source /opt/wow_wotlk/server/source/src/tools/vmap4_extractor /opt/wow_wotlk/server/build /opt/wow_wotlk/server/build/src/tools/vmap4_extractor /opt/wow_wotlk/server/build/src/tools/vmap4_extractor/CMakeFiles/vmap4extractor.dir/DependInfo.cmake --color=
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+cd /opt/wow_wotlk/server/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/wow_wotlk/server/source /opt/wow_wotlk/server/source/src/server/shared /opt/wow_wotlk/server/build /opt/wow_wotlk/server/build/src/server/shared /opt/wow_wotlk/server/build/src/server/shared/CMakeFiles/shared.dir/DependInfo.cmake --color=
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make  -f src/tools/map_extractor/CMakeFiles/mapextractor.dir/build.make src/tools/map_extractor/CMakeFiles/mapextractor.dir/build
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make  -f src/tools/vmap4_extractor/CMakeFiles/vmap4extractor.dir/build.make src/tools/vmap4_extractor/CMakeFiles/vmap4extractor.dir/build
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make  -f src/server/shared/CMakeFiles/shared.dir/build.make src/server/shared/CMakeFiles/shared.dir/build
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+make[2]: Für das Ziel „src/tools/map_extractor/CMakeFiles/mapextractor.dir/build“ ist nichts zu tun.
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+make[2]: Für das Ziel „src/tools/vmap4_extractor/CMakeFiles/vmap4extractor.dir/build“ ist nichts zu tun.
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+make[2]: Für das Ziel „src/server/shared/CMakeFiles/shared.dir/build“ ist nichts zu tun.
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+[ 18%] Built target mapextractor
+[ 19%] Built target vmap4extractor
+[ 20%] Built target shared
+make  -f src/server/game/CMakeFiles/game.dir/build.make src/server/game/CMakeFiles/game.dir/depend
+make  -f src/server/authserver/CMakeFiles/authserver.dir/build.make src/server/authserver/CMakeFiles/authserver.dir/depend
+make  -f src/server/scripts/CMakeFiles/scripts.dir/build.make src/server/scripts/CMakeFiles/scripts.dir/depend
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+cd /opt/wow_wotlk/server/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/wow_wotlk/server/source /opt/wow_wotlk/server/source/src/server/authserver /opt/wow_wotlk/server/build /opt/wow_wotlk/server/build/src/server/authserver /opt/wow_wotlk/server/build/src/server/authserver/CMakeFiles/authserver.dir/DependInfo.cmake --color=
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make  -f src/server/authserver/CMakeFiles/authserver.dir/build.make src/server/authserver/CMakeFiles/authserver.dir/build
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+make[2]: Für das Ziel „src/server/authserver/CMakeFiles/authserver.dir/build“ ist nichts zu tun.
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+cd /opt/wow_wotlk/server/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/wow_wotlk/server/source /opt/wow_wotlk/server/source/src/server/game /opt/wow_wotlk/server/build /opt/wow_wotlk/server/build/src/server/game /opt/wow_wotlk/server/build/src/server/game/CMakeFiles/game.dir/DependInfo.cmake --color=
+[ 20%] Built target authserver
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+cd /opt/wow_wotlk/server/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/wow_wotlk/server/source /opt/wow_wotlk/server/source/src/server/scripts /opt/wow_wotlk/server/build /opt/wow_wotlk/server/build/src/server/scripts /opt/wow_wotlk/server/build/src/server/scripts/CMakeFiles/scripts.dir/DependInfo.cmake --color=
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make  -f src/server/game/CMakeFiles/game.dir/build.make src/server/game/CMakeFiles/game.dir/build
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make  -f src/server/scripts/CMakeFiles/scripts.dir/build.make src/server/scripts/CMakeFiles/scripts.dir/build
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+make[2]: Für das Ziel „src/server/game/CMakeFiles/game.dir/build“ ist nichts zu tun.
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+[ 44%] Built target game
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+make[2]: Für das Ziel „src/server/scripts/CMakeFiles/scripts.dir/build“ ist nichts zu tun.
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+[ 99%] Built target scripts
+make  -f src/server/worldserver/CMakeFiles/worldserver.dir/build.make src/server/worldserver/CMakeFiles/worldserver.dir/depend
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+cd /opt/wow_wotlk/server/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/wow_wotlk/server/source /opt/wow_wotlk/server/source/src/server/worldserver /opt/wow_wotlk/server/build /opt/wow_wotlk/server/build/src/server/worldserver /opt/wow_wotlk/server/build/src/server/worldserver/CMakeFiles/worldserver.dir/DependInfo.cmake --color=
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+make  -f src/server/worldserver/CMakeFiles/worldserver.dir/build.make src/server/worldserver/CMakeFiles/worldserver.dir/build
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird betreten
+make[2]: Für das Ziel „src/server/worldserver/CMakeFiles/worldserver.dir/build“ ist nichts zu tun.
+make[2]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+[100%] Built target worldserver
+make[1]: Verzeichnis „/opt/wow_wotlk/server/build“ wird verlassen
+/usr/bin/cmake -E cmake_progress_start /opt/wow_wotlk/server/build/CMakeFiles 0
