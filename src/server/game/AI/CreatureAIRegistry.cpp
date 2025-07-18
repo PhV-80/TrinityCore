@@ -49,6 +49,7 @@ namespace AIRegistry
         (new CreatureAIFactory<VehicleAI>("VehicleAI"))->RegisterSelf();
         (new CreatureAIFactory<SmartAI>("SmartAI"))->RegisterSelf();
         (new CreatureAIFactory<ScheduledChangeAI, false>("ScheduledChangeAI"))->RegisterSelf();
+        TC_LOG_INFO("server.loading", "Registriere AutonomousPlayerAI!");
         (new CreatureAIFactory<AutonomousPlayerAI>("AutonomousPlayerAI"))->RegisterSelf();
 
         (new GameObjectAIFactory<NullGameObjectAI>("NullGameObjectAI"))->RegisterSelf();
