@@ -52,6 +52,7 @@ constexpr float SOCIAL_INTERACTION_DISTANCE = 15.0f;
 // Permissible - Required for AI Factory Registration
 int32 AutonomousPlayerAI::Permissible(Creature const* creature)
 {
+    TC_LOG_INFO("autonomous.npc", "Permissible aufgerufen für NPC {} mit AIName '{}'", creature->GetName(), creature->GetAIName());
     // Allow this AI for any creature with AIName "AutonomousPlayerAI"
     if (!creature)
         return PERMIT_BASE_NO;
