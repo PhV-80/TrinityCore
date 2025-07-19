@@ -1,96 +1,214 @@
-# ![logo](https://community.trinitycore.org/public/style_images/1_trinitycore.png) TrinityCore (3.3.5)
+# TrinityCore Web Administration Panel (PHP)
 
-[![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/TrinityCore/TrinityCore.svg)](https://isitmaintained.com/project/TrinityCore/TrinityCore "Average time to resolve an issue") [![Percentage of issues still open](https://isitmaintained.com/badge/open/TrinityCore/TrinityCore.svg)](https://isitmaintained.com/project/TrinityCore/TrinityCore "Percentage of issues still open")
+Eine modulare PHP-Webanwendung zur Verwaltung eines TrinityCore 3.3.5 Servers mit Login/Registrierung und erweiterbaren Plugins.
 
---------------
+## Features
 
+- **Authentifizierung**: Login und Registrierung für Spieler
+- **Dashboard**: Server-Status und Statistiken in Echtzeit
+- **Spieler-Verwaltung**: Account- und Charakterverwaltung
+- **Datenbank-Browser**: Durchsuchen von Quests, Kreaturen, NPCs, Items
+- **Plugin-System**: Erweiterbare Module (Arsenal, Quest Browser, etc.)
+- **Responsive Design**: Optimiert für Desktop und Mobile
+- **WoW-inspiriertes Design**: Dunkles Theme mit goldenen Akzenten
 
-* [Build Status](#build-status)
-* [Introduction](#introduction)
-* [Requirements](#requirements)
-* [Install](#install)
-* [Reporting issues](#reporting-issues)
-* [Submitting fixes](#submitting-fixes)
-* [Copyright](#copyright)
-* [Authors &amp; Contributors](#authors--contributors)
-* [Links](#links)
+## Voraussetzungen
 
+- Apache2 Webserver
+- PHP 7.4 oder höher
+- MySQL/MariaDB
+- TrinityCore 3.3.5 Server
+- PDO MySQL Extension
 
+## Installation
 
-## Build Status
+### 1. Dateien kopieren
 
-master | 3.3.5 | cata_classic
-:------------: | :------------: | :------------:
-[![master Build Status](https://circleci.com/gh/TrinityCore/TrinityCore/tree/master.svg?style=shield)](https://circleci.com/gh/TrinityCore/TrinityCore/tree/master) | [![3.3.5 Build Status](https://circleci.com/gh/TrinityCore/TrinityCore/tree/3.3.5.svg?style=shield)](https://circleci.com/gh/TrinityCore/TrinityCore/tree/3.3.5) | [![cata_classic Build Status](https://circleci.com/gh/TrinityCore/TrinityCore/tree/cata_classic.svg?style=shield)](https://circleci.com/gh/TrinityCore/TrinityCore/tree/cata_classic)
-[![master Build status](https://ci.appveyor.com/api/projects/status/54d0u1fxe50ad80o/branch/master?svg=true)](https://ci.appveyor.com/project/DDuarte/trinitycore/branch/master) | [![Build status](https://ci.appveyor.com/api/projects/status/54d0u1fxe50ad80o/branch/3.3.5?svg=true)](https://ci.appveyor.com/project/DDuarte/trinitycore/branch/3.3.5) | [![Build status](https://ci.appveyor.com/api/projects/status/54d0u1fxe50ad80o/branch/cata_classic?svg=true)](https://ci.appveyor.com/project/DDuarte/trinitycore/branch/cata_classic)
-[![master GCC Build status](https://github.com/TrinityCore/TrinityCore/actions/workflows/gcc-build.yml/badge.svg?branch=master&event=push)](https://github.com/TrinityCore/TrinityCore/actions?query=workflow%3AGCC+branch%3Amaster+event%3Apush) | [![3.3.5 GCC Build status](https://github.com/TrinityCore/TrinityCore/actions/workflows/gcc-build.yml/badge.svg?branch=3.3.5&event=push)](https://github.com/TrinityCore/TrinityCore/actions?query=workflow%3AGCC+branch%3A3.3.5+event%3Apush) | [![cata_classic GCC Build status](https://github.com/TrinityCore/TrinityCore/actions/workflows/gcc-build.yml/badge.svg?branch=cata_classic&event=push)](https://github.com/TrinityCore/TrinityCore/actions?query=workflow%3AGCC+branch%3Acata_classic+event%3Apush)
-[![master macOS arm64 Build status](https://github.com/TrinityCore/TrinityCore/actions/workflows/macos-arm-build.yml/badge.svg?branch=master&event=push)](https://github.com/TrinityCore/TrinityCore/actions?query=workflow%3AGCC+branch%3Amaster+event%3Apush) | | [![cata_classic macOS arm64 Build status](https://github.com/TrinityCore/TrinityCore/actions/workflows/macos-arm-build.yml/badge.svg?branch=cata_classic&event=push)](https://github.com/TrinityCore/TrinityCore/actions?query=workflow%3AGCC+branch%3Acata_classic+event%3Apush)
-[![Coverity Scan Build Status](https://scan.coverity.com/projects/435/badge.svg)](https://scan.coverity.com/projects/435) | [![Coverity Scan Build Status](https://scan.coverity.com/projects/4656/badge.svg)](https://scan.coverity.com/projects/4656) |
+Kopieren Sie alle Dateien in Ihr Apache2 Web-Verzeichnis:
 
-## Introduction
+```bash
+sudo cp -r trinitycore-web-admin-php /var/www/html/trinitycore-admin
+sudo chown -R www-data:www-data /var/www/html/trinitycore-admin
+sudo chmod -R 755 /var/www/html/trinitycore-admin
+```
 
-TrinityCore is a *MMORPG* Framework based mostly in C++.
+### 2. Datenbankkonfiguration
 
-It is derived from *MaNGOS*, the *Massive Network Game Object Server*, and is
-based on the code of that project with extensive changes over time to optimize,
-improve and cleanup the codebase at the same time as improving the in-game
-mechanics and functionality.
+Bearbeiten Sie `config/database.php` und passen Sie die Datenbankeinstellungen an:
 
-It is completely open source; community involvement is highly encouraged.
+```php
+const DB_HOST = 'localhost';
+const DB_USER = 'ihr_mysql_benutzer';
+const DB_PASS = 'ihr_mysql_passwort';
+```
 
-If you wish to contribute ideas or code, please visit our site linked below or
-make pull requests to our [Github repository](https://github.com/TrinityCore/TrinityCore/pulls).
+### 3. Apache2 Konfiguration
 
-For further information on the TrinityCore project, please visit our project
-website at [TrinityCore.org](https://www.trinitycore.org).
+Erstellen Sie eine Virtual Host Konfiguration:
 
-## Requirements
+```apache
+<VirtualHost *:80>
+    ServerName trinitycore-admin.ihre-domain.de
+    DocumentRoot /var/www/html/trinitycore-admin
+    
+    <Directory /var/www/html/trinitycore-admin>
+        AllowOverride All
+        Require all granted
+    </Directory>
+    
+    ErrorLog ${APACHE_LOG_DIR}/trinitycore-admin_error.log
+    CustomLog ${APACHE_LOG_DIR}/trinitycore-admin_access.log combined
+</VirtualHost>
+```
 
+### 4. .htaccess erstellen
 
-Software requirements are available in the [wiki](https://trinitycore.info/en/install/requirements) for
-Windows, Linux and macOS.
+Erstellen Sie eine `.htaccess` Datei im Hauptverzeichnis:
 
+```apache
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]
 
-## Install
+# Security headers
+Header always set X-Content-Type-Options nosniff
+Header always set X-Frame-Options DENY
+Header always set X-XSS-Protection "1; mode=block"
+```
 
-Detailed installation guides are available in the [wiki](https://trinitycore.info/en/home) for
-Windows, Linux and macOS.
+### 5. Datenbank-Tabelle für Logs erstellen
 
+Führen Sie folgendes SQL aus:
 
-## Reporting issues
+```sql
+USE auth;
+CREATE TABLE wotlk_account_log (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    account_id INT NOT NULL,
+    action VARCHAR(255) NOT NULL,
+    details TEXT,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_account_id (account_id),
+    INDEX idx_timestamp (timestamp)
+);
+```
 
-Issues can be reported via the [Github issue tracker](https://github.com/TrinityCore/TrinityCore/labels/Branch-3.3.5a).
+## Verwendung
 
-Please take the time to review existing issues before submitting your own to
-prevent duplicates.
+### Erste Schritte
 
-In addition, thoroughly read through the [issue tracker guide](https://community.trinitycore.org/topic/37-the-trinitycore-issuetracker-and-you/) to ensure
-your report contains the required information. Incorrect or poorly formed
-reports are wasteful and are subject to deletion.
+1. Öffnen Sie `http://ihre-domain.de/trinitycore-admin` im Browser
+2. Registrieren Sie sich mit einem neuen Account
+3. Melden Sie sich an und nutzen Sie das Dashboard
 
+### Navigation
 
-## Submitting fixes
+- **Dashboard**: Übersicht über Server-Status und Statistiken
+- **Spieler**: Account-Verwaltung und -Berechtigungen
+- **Charaktere**: Charakterdurchsuchung und -verwaltung
+- **Datenbank**: Durchsuchen von Quests, Items, Kreaturen, etc.
+- **Plugins**: Zusätzliche Module verwalten
 
-C++ fixes are submitted as pull requests via Github. For more information on how to
-properly submit a pull request, read the [how-to: maintain a remote fork](https://community.trinitycore.org/topic/9002-howto-maintain-a-remote-fork-for-pull-requests-tortoisegit/).
-For SQL only fixes, open a ticket; if a bug report exists for the bug, post on an existing ticket.
+## Projektstruktur
 
+```
+trinitycore-web-admin-php/
+├── config/
+│   └── database.php          # Datenbankkonfiguration
+├── includes/
+│   └── functions.php         # Allgemeine Funktionen
+├── assets/
+│   ├── css/                  # Stylesheets
+│   ├── js/                   # JavaScript
+│   └── images/               # Bilder
+├── modules/                  # Hauptmodule
+├── plugins/                  # Plugin-System
+├── index.php                 # Login/Register
+├── dashboard.php             # Hauptdashboard
+├── logout.php                # Logout
+└── README.md
+```
 
-## Copyright
+## Datenbankverbindungen
 
-License: GPL 2.0
+Die Anwendung verbindet sich mit drei TrinityCore-Datenbanken:
 
-Read file [COPYING](COPYING).
+- **auth**: Account-Verwaltung und Authentifizierung
+- **characters**: Charakterdaten und Spielerinformationen
+- **world**: Spielwelt-Daten (Quests, Items, Kreaturen, etc.)
 
+## Sicherheit
 
-## Authors &amp; Contributors
+- CSRF-Schutz für alle Formulare
+- Sichere Session-Verwaltung
+- SQL-Injection-Schutz durch PDO
+- XSS-Schutz durch Input-Sanitization
+- Rate Limiting (kann in Apache2 konfiguriert werden)
 
-Read file [AUTHORS](AUTHORS).
+## Anpassungen
 
+### Design anpassen
 
-## Links
+Bearbeiten Sie die CSS-Variablen in `assets/css/main.css`:
 
-* [Website](https://www.trinitycore.org)
-* [Wiki](https://www.trinitycore.info)
-* [Forums](https://talk.trinitycore.org/)
-* [Discord](https://discord.trinitycore.org/)
+```css
+:root {
+    --primary-color: #c79c6e;    /* Hauptfarbe */
+    --accent-color: #ffd700;     /* Akzentfarbe */
+    --dark-bg: #1a1a1a;          /* Hintergrund */
+}
+```
+
+### Neue Module hinzufügen
+
+1. Erstellen Sie eine neue PHP-Datei in `modules/`
+2. Fügen Sie die Navigation in `dashboard.php` hinzu
+3. Erstellen Sie entsprechende CSS/JS-Dateien
+
+## Troubleshooting
+
+### Häufige Probleme
+
+1. **Datenbankverbindung fehlgeschlagen**
+   - Überprüfen Sie die Einstellungen in `config/database.php`
+   - Stellen Sie sicher, dass der MySQL-Benutzer die richtigen Rechte hat
+
+2. **Session-Probleme**
+   - Überprüfen Sie die PHP-Session-Einstellungen
+   - Stellen Sie sicher, dass das Verzeichnis beschreibbar ist
+
+3. **404-Fehler**
+   - Aktivieren Sie mod_rewrite: `sudo a2enmod rewrite`
+   - Überprüfen Sie die .htaccess-Datei
+
+### Logs überprüfen
+
+```bash
+# Apache2 Logs
+sudo tail -f /var/log/apache2/trinitycore-admin_error.log
+
+# PHP Logs
+sudo tail -f /var/log/php/error.log
+```
+
+## Lizenz
+
+MIT License - Siehe LICENSE-Datei für Details.
+
+## Support
+
+Bei Problemen oder Fragen:
+1. Überprüfen Sie die Logs
+2. Stellen Sie sicher, dass alle Voraussetzungen erfüllt sind
+3. Testen Sie die Datenbankverbindung manuell
+
+## Changelog
+
+### Version 1.0.0
+- Initiale Version
+- Login/Register System
+- Dashboard mit Server-Status
+- Grundlegende Spieler- und Charakterverwaltung
+- Datenbank-Browser
+- Plugin-System-Grundlage
