@@ -21,24 +21,49 @@ if ($_POST && isset($_POST['action']) && $_POST['action'] === 'login') {
             $error = 'Bitte füllen Sie alle Felder aus.';
         } else {
             try {
+                debugLog("Login attempt for username: " . $username);
+                
                 $db = DatabaseConfig::getAuthConnection();
-                $stmt = $db->prepare("SELECT id, username, sha_pass_hash, email FROM " . DatabaseConfig::getTableName('account') . " WHERE username = ?");
+                debugLog("Database connection established");
+                
+                $tableName = DatabaseConfig::getTableName('account');
+                debugLog("Using table: " . $tableName);
+                
+                $stmt = $db->prepare("SELECT id, username, sha_pass_hash, email FROM " . $tableName . " WHERE username = ?");
                 $stmt->execute(array($username));
                 $user = $stmt->fetch();
                 
-                if ($user && verifyPassword($password, $user['sha_pass_hash'])) {
-                    startSession();
-                    $_SESSION['user_id'] = $user['id'];
-                    $_SESSION['username'] = $user['username'];
-                    $_SESSION['email'] = $user['email'];
+                debugLog("User query result: " . ($user ? "User found" : "User not found"));
+                
+                if ($user) {
+                    $hashedPassword = hashPassword($password);
+                    $passwordMatch = verifyPassword($password, $user['sha_pass_hash']);
                     
-                    logActivity($user['id'], 'login', 'Web login successful');
-                    redirect('dashboard.php');
+                    debugLog("Password verification: " . ($passwordMatch ? "Match" : "No match"));
+                    debugLog("Input hash: " . $hashedPassword);
+                    debugLog("DB hash: " . $user['sha_pass_hash']);
+                    
+                    if ($passwordMatch) {
+                        startSession();
+                        $_SESSION['user_id'] = $user['id'];
+                        $_SESSION['username'] = $user['username'];
+                        $_SESSION['email'] = $user['email'];
+                        
+                        debugLog("Login successful for user ID: " . $user['id']);
+                        logActivity($user['id'], 'login', 'Web login successful');
+                        redirect('dashboard.php');
+                    } else {
+                        $error = 'Ungültige Anmeldedaten.';
+                        debugLog("Password mismatch for user: " . $username);
+                    }
                 } else {
                     $error = 'Ungültige Anmeldedaten.';
+                    debugLog("User not found: " . $username);
                 }
             } catch (Exception $e) {
                 $error = 'Datenbankfehler. Bitte versuchen Sie es später erneut.';
+                debugLog("Database error during login: " . $e->getMessage());
+                debugLog("Error details: " . $e->getTraceAsString());
             }
         }
     }
@@ -62,23 +87,40 @@ if ($_POST && isset($_POST['action']) && $_POST['action'] === 'register') {
             $error = 'Passwort muss mindestens 6 Zeichen lang sein.';
         } else {
             try {
+                debugLog("Registration attempt for username: " . $username);
+                
                 $db = DatabaseConfig::getAuthConnection();
+                debugLog("Database connection established for registration");
+                
+                $tableName = DatabaseConfig::getTableName('account');
+                debugLog("Using table: " . $tableName);
                 
                 // Check if username already exists
-                $stmt = $db->prepare("SELECT id FROM " . DatabaseConfig::getTableName('account') . " WHERE username = ?");
+                $stmt = $db->prepare("SELECT id FROM " . $tableName . " WHERE username = ?");
                 $stmt->execute(array($username));
                 if ($stmt->fetch()) {
                     $error = 'Benutzername existiert bereits.';
+                    debugLog("Username already exists: " . $username);
                 } else {
                     // Create new account
                     $hashedPassword = hashPassword($password);
-                    $stmt = $db->prepare("INSERT INTO " . DatabaseConfig::getTableName('account') . " (username, sha_pass_hash, email, joindate) VALUES (?, ?, ?, NOW())");
-                    $stmt->execute(array($username, $hashedPassword, $email));
+                    debugLog("Creating new account with hashed password: " . $hashedPassword);
                     
-                    $success = 'Account erfolgreich erstellt! Sie können sich jetzt anmelden.';
+                    $stmt = $db->prepare("INSERT INTO " . $tableName . " (username, sha_pass_hash, email, joindate) VALUES (?, ?, ?, NOW())");
+                    $result = $stmt->execute(array($username, $hashedPassword, $email));
+                    
+                    if ($result) {
+                        $success = 'Account erfolgreich erstellt! Sie können sich jetzt anmelden.';
+                        debugLog("Account created successfully for: " . $username);
+                    } else {
+                        $error = 'Registrierung fehlgeschlagen.';
+                        debugLog("Account creation failed for: " . $username);
+                    }
                 }
             } catch (Exception $e) {
                 $error = 'Registrierung fehlgeschlagen. Bitte versuchen Sie es später erneut.';
+                debugLog("Database error during registration: " . $e->getMessage());
+                debugLog("Error details: " . $e->getTraceAsString());
             }
         }
     }
