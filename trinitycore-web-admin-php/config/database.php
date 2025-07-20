@@ -10,16 +10,37 @@ class DatabaseConfig {
     const DB_USER = 'trinity';  // Ändern Sie dies zu Ihrem MySQL Benutzer
     const DB_PASS = 'trinity';  // Ändern Sie dies zu Ihrem MySQL Passwort
     
-    // Database names with prefix
-    const DB_AUTH = 'wotlk_auth';
-    const DB_CHARACTERS = 'wotlk_characters';
-    const DB_WORLD = 'wotlk_world';
+    // Prefix für alle TrinityCore-Datenbanken (leer lassen, falls kein Prefix genutzt wird)
+    const PREFIX = 'wotlk_';
+    
+    // Basisnamen der Datenbanken
+    const BASE_AUTH = 'auth';
+    const BASE_CHARACTERS = 'characters';
+    const BASE_WORLD = 'world';
     
     // Connection instances
     private static $authConnection = null;
     private static $charactersConnection = null;
     private static $worldConnection = null;
     
+    /**
+     * Liefert den vollständigen Datenbanknamen für auth
+     */
+    public static function getAuthDbName() {
+        return self::PREFIX . self::BASE_AUTH;
+    }
+    /**
+     * Liefert den vollständigen Datenbanknamen für characters
+     */
+    public static function getCharactersDbName() {
+        return self::PREFIX . self::BASE_CHARACTERS;
+    }
+    /**
+     * Liefert den vollständigen Datenbanknamen für world
+     */
+    public static function getWorldDbName() {
+        return self::PREFIX . self::BASE_WORLD;
+    }
     /**
      * Debug logging function
      */
@@ -28,19 +49,19 @@ class DatabaseConfig {
             error_log("[DB DEBUG] " . $message);
         }
     }
-    
     /**
      * Get connection to auth database
      */
     public static function getAuthConnection() {
         if (self::$authConnection === null) {
             try {
-                self::debugLog("Attempting to connect to auth database: " . self::DB_AUTH);
-                self::debugLog("Connection string: mysql:host=" . self::DB_HOST . ";dbname=" . self::DB_AUTH . ";charset=utf8");
+                $dbName = self::getAuthDbName();
+                self::debugLog("Attempting to connect to auth database: " . $dbName);
+                self::debugLog("Connection string: mysql:host=" . self::DB_HOST . ";dbname=" . $dbName . ";charset=utf8");
                 self::debugLog("User: " . self::DB_USER);
                 
                 self::$authConnection = new PDO(
-                    'mysql:host=' . self::DB_HOST . ';dbname=' . self::DB_AUTH . ';charset=utf8',
+                    'mysql:host=' . self::DB_HOST . ';dbname=' . $dbName . ';charset=utf8',
                     self::DB_USER,
                     self::DB_PASS,
                     array(
@@ -59,17 +80,17 @@ class DatabaseConfig {
         }
         return self::$authConnection;
     }
-    
     /**
      * Get connection to characters database
      */
     public static function getCharactersConnection() {
         if (self::$charactersConnection === null) {
             try {
-                self::debugLog("Attempting to connect to characters database: " . self::DB_CHARACTERS);
+                $dbName = self::getCharactersDbName();
+                self::debugLog("Attempting to connect to characters database: " . $dbName);
                 
                 self::$charactersConnection = new PDO(
-                    'mysql:host=' . self::DB_HOST . ';dbname=' . self::DB_CHARACTERS . ';charset=utf8',
+                    'mysql:host=' . self::DB_HOST . ';dbname=' . $dbName . ';charset=utf8',
                     self::DB_USER,
                     self::DB_PASS,
                     array(
@@ -88,17 +109,17 @@ class DatabaseConfig {
         }
         return self::$charactersConnection;
     }
-    
     /**
      * Get connection to world database
      */
     public static function getWorldConnection() {
         if (self::$worldConnection === null) {
             try {
-                self::debugLog("Attempting to connect to world database: " . self::DB_WORLD);
+                $dbName = self::getWorldDbName();
+                self::debugLog("Attempting to connect to world database: " . $dbName);
                 
                 self::$worldConnection = new PDO(
-                    'mysql:host=' . self::DB_HOST . ';dbname=' . self::DB_WORLD . ';charset=utf8',
+                    'mysql:host=' . self::DB_HOST . ';dbname=' . $dbName . ';charset=utf8',
                     self::DB_USER,
                     self::DB_PASS,
                     array(
@@ -117,7 +138,6 @@ class DatabaseConfig {
         }
         return self::$worldConnection;
     }
-    
     /**
      * Get table name (no prefix needed, tables are in prefixed databases)
      */
@@ -125,7 +145,6 @@ class DatabaseConfig {
         self::debugLog("Getting table name: " . $tableName . " (no prefix needed)");
         return $tableName;
     }
-    
     /**
      * Test database connections
      */
