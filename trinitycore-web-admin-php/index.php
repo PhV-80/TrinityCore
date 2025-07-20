@@ -49,21 +49,21 @@ if ($_POST && isset($_POST['action']) && $_POST['action'] === 'login') {
                         $_SESSION['username'] = $user['username'];
                         $_SESSION['email'] = $user['email'];
                         
-                        debugLog("Login successful for user ID: " . $user['id']);
+                        debugSuccess("Login successful for user ID: " . $user['id']);
                         logActivity($user['id'], 'login', 'Web login successful');
                         redirect('dashboard.php');
                     } else {
                         $error = 'Ungültige Anmeldedaten.';
-                        debugLog("Password mismatch for user: " . $username);
+                        debugWarning("Password mismatch for user: " . $username);
                     }
                 } else {
                     $error = 'Ungültige Anmeldedaten.';
-                    debugLog("User not found: " . $username);
+                    debugWarning("User not found: " . $username);
                 }
             } catch (Exception $e) {
                 $error = 'Datenbankfehler. Bitte versuchen Sie es später erneut.';
-                debugLog("Database error during login: " . $e->getMessage());
-                debugLog("Error details: " . $e->getTraceAsString());
+                debugError("Database error during login: " . $e->getMessage());
+                debugError("Error details: " . $e->getTraceAsString());
             }
         }
     }
@@ -100,7 +100,7 @@ if ($_POST && isset($_POST['action']) && $_POST['action'] === 'register') {
                 $stmt->execute(array($username));
                 if ($stmt->fetch()) {
                     $error = 'Benutzername existiert bereits.';
-                    debugLog("Username already exists: " . $username);
+                    debugWarning("Username already exists: " . $username);
                 } else {
                     // Create new account
                     $hashedPassword = hashPassword($password);
@@ -111,16 +111,16 @@ if ($_POST && isset($_POST['action']) && $_POST['action'] === 'register') {
                     
                     if ($result) {
                         $success = 'Account erfolgreich erstellt! Sie können sich jetzt anmelden.';
-                        debugLog("Account created successfully for: " . $username);
+                        debugSuccess("Account created successfully for: " . $username);
                     } else {
                         $error = 'Registrierung fehlgeschlagen.';
-                        debugLog("Account creation failed for: " . $username);
+                        debugError("Account creation failed for: " . $username);
                     }
                 }
             } catch (Exception $e) {
                 $error = 'Registrierung fehlgeschlagen. Bitte versuchen Sie es später erneut.';
-                debugLog("Database error during registration: " . $e->getMessage());
-                debugLog("Error details: " . $e->getTraceAsString());
+                debugError("Database error during registration: " . $e->getMessage());
+                debugError("Error details: " . $e->getTraceAsString());
             }
         }
     }
@@ -212,5 +212,6 @@ $csrf_token = generateCSRFToken();
     </div>
     
     <script src="assets/js/auth.js"></script>
+    <?php echo renderDebugPanel(); ?>
 </body>
 </html>

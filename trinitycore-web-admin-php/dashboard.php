@@ -171,5 +171,6 @@ $totalCharacters = getTotalCharactersCount();
     </div>
 
     <script src="assets/js/dashboard.js"></script>
+    <?php echo renderDebugPanel(); ?>
 </body>
 </html>

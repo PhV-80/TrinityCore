@@ -4,37 +4,16 @@
  * Allgemeine Hilfsfunktionen für die TrinityCore Web Admin
  */
 
+require_once __DIR__ . '/../config/config.php';
 require_once 'config/database.php';
-
-// Debug-Modus aktivieren (für Entwicklung)
-define('DEBUG_MODE', true);
-
-if (DEBUG_MODE) {
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-    // Optional: Fehler auch ins eigene Logfile schreiben
-    // ini_set('error_log', __DIR__ . '/../debug.log');
-}
+require_once __DIR__ . '/debug.php';
 
 /**
  * Gibt im DEV-Modus einen Hinweis in die HTML-Ausgabe
  */
 function devModeBanner() {
-    if (defined('DEBUG_MODE') && DEBUG_MODE) {
+    if (DEV_MODE) {
         echo '<div style="background:#c00;color:#fff;padding:8px 16px;font-weight:bold;text-align:center;">DEBUG-MODUS AKTIV: Fehlerausgabe & Logging sind aktiviert!</div>';
-    }
-}
-
-/**
- * Debug-Funktion für detaillierte Fehlerausgabe
- */
-function debugLog($message, $data = null) {
-    if (DEBUG_MODE) {
-        error_log("[DEBUG] " . $message);
-        if ($data !== null) {
-            error_log("[DEBUG] Data: " . print_r($data, true));
-        }
     }
 }
 
@@ -144,7 +123,7 @@ function getOnlinePlayersCount() {
         $result = $stmt->fetch();
         return $result['count'] ?? 0;
     } catch (Exception $e) {
-        debugLog("Error getting online players count: " . $e->getMessage());
+        debugError("Error getting online players count: " . $e->getMessage());
         return 0;
     }
 }
@@ -160,7 +139,7 @@ function getTotalAccountsCount() {
         $result = $stmt->fetch();
         return $result['count'] ?? 0;
     } catch (Exception $e) {
-        debugLog("Error getting total accounts count: " . $e->getMessage());
+        debugError("Error getting total accounts count: " . $e->getMessage());
         return 0;
     }
 }
@@ -176,7 +155,7 @@ function getTotalCharactersCount() {
         $result = $stmt->fetch();
         return $result['count'] ?? 0;
     } catch (Exception $e) {
-        debugLog("Error getting total characters count: " . $e->getMessage());
+        debugError("Error getting total characters count: " . $e->getMessage());
         return 0;
     }
 }
@@ -237,7 +216,7 @@ function logActivity($userId, $action, $details = '') {
         $stmt = $db->prepare("INSERT INTO " . DatabaseConfig::getTableName('account_log') . " (account_id, action, details, timestamp) VALUES (?, ?, ?, NOW())");
         $stmt->execute(array($userId, $action, $details));
     } catch (Exception $e) {
-        debugLog("Error logging activity: " . $e->getMessage());
+        debugError("Error logging activity: " . $e->getMessage());
     }
 }
 ?>
