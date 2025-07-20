@@ -23,6 +23,7 @@ $totalCharacters = getTotalCharactersCount();
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
+<?php devModeBanner(); ?>
     <div class="app-wrapper">
         <!-- Header -->
         <header class="app-header">

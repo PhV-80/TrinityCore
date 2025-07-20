@@ -9,6 +9,23 @@ require_once 'config/database.php';
 // Debug-Modus aktivieren (für Entwicklung)
 define('DEBUG_MODE', true);
 
+if (DEBUG_MODE) {
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+    // Optional: Fehler auch ins eigene Logfile schreiben
+    // ini_set('error_log', __DIR__ . '/../debug.log');
+}
+
+/**
+ * Gibt im DEV-Modus einen Hinweis in die HTML-Ausgabe
+ */
+function devModeBanner() {
+    if (defined('DEBUG_MODE') && DEBUG_MODE) {
+        echo '<div style="background:#c00;color:#fff;padding:8px 16px;font-weight:bold;text-align:center;">DEBUG-MODUS AKTIV: Fehlerausgabe & Logging sind aktiviert!</div>';
+    }
+}
+
 /**
  * Debug-Funktion für detaillierte Fehlerausgabe
  */
