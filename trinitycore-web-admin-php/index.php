@@ -11,62 +11,7 @@ $success = '';
 
 // Handle login form submission
 if ($_POST && isset($_POST['action']) && $_POST['action'] === 'login') {
-    if (!verifyCSRFToken($_POST['csrf_token'] ?? '')) {
-        $error = 'Sicherheitsfehler. Bitte versuchen Sie es erneut.';
-    } else {
-        $username = sanitizeInput($_POST['username'] ?? '');
-        $password = $_POST['password'] ?? '';
-        
-        if (empty($username) || empty($password)) {
-            $error = 'Bitte füllen Sie alle Felder aus.';
-        } else {
-            try {
-                debugLog("Login attempt for username: " . $username);
-                
-                $db = DatabaseConfig::getAuthConnection();
-                debugLog("Database connection established");
-                
-                $tableName = DatabaseConfig::getTableName('account');
-                debugLog("Using table: " . $tableName);
-                
-                $stmt = $db->prepare("SELECT id, username, sha_pass_hash, email FROM " . $tableName . " WHERE username = ?");
-                $stmt->execute(array($username));
-                $user = $stmt->fetch();
-                
-                debugLog("User query result: " . ($user ? "User found" : "User not found"));
-                
-                if ($user) {
-                    $hashedPassword = hashPassword($password);
-                    $passwordMatch = verifyPassword($password, $user['sha_pass_hash']);
-                    
-                    debugLog("Password verification: " . ($passwordMatch ? "Match" : "No match"));
-                    debugLog("Input hash: " . $hashedPassword);
-                    debugLog("DB hash: " . $user['sha_pass_hash']);
-                    
-                    if ($passwordMatch) {
-                        startSession();
-                        $_SESSION['user_id'] = $user['id'];
-                        $_SESSION['username'] = $user['username'];
-                        $_SESSION['email'] = $user['email'];
-                        
-                        debugSuccess("Login successful for user ID: " . $user['id']);
-                        logActivity($user['id'], 'login', 'Web login successful');
-                        redirect('dashboard.php');
-                    } else {
-                        $error = 'Ungültige Anmeldedaten.';
-                        debugWarning("Password mismatch for user: " . $username);
-                    }
-                } else {
-                    $error = 'Ungültige Anmeldedaten.';
-                    debugWarning("User not found: " . $username);
-                }
-            } catch (Exception $e) {
-                $error = 'Datenbankfehler. Bitte versuchen Sie es später erneut.';
-                debugError("Database error during login: " . $e->getMessage());
-                debugError("Error details: " . $e->getTraceAsString());
-            }
-        }
-    }
+    $error = 'Web-Login ist mit dieser TrinityCore-Version nicht möglich. Bitte nutze den WoW-Client.';
 }
 
 // Handle registration form submission
@@ -78,7 +23,6 @@ if ($_POST && isset($_POST['action']) && $_POST['action'] === 'register') {
         $email = sanitizeInput($_POST['email'] ?? '');
         $password = $_POST['password'] ?? '';
         $confirm_password = $_POST['confirm_password'] ?? '';
-        
         if (empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
             $error = 'Bitte füllen Sie alle Felder aus.';
         } elseif ($password !== $confirm_password) {
@@ -88,13 +32,10 @@ if ($_POST && isset($_POST['action']) && $_POST['action'] === 'register') {
         } else {
             try {
                 debugLog("Registration attempt for username: " . $username);
-                
                 $db = DatabaseConfig::getAuthConnection();
                 debugLog("Database connection established for registration");
-                
                 $tableName = DatabaseConfig::getTableName('account');
                 debugLog("Using table: " . $tableName);
-                
                 // Check if username already exists
                 $stmt = $db->prepare("SELECT id FROM " . $tableName . " WHERE username = ?");
                 $stmt->execute(array($username));
@@ -102,15 +43,15 @@ if ($_POST && isset($_POST['action']) && $_POST['action'] === 'register') {
                     $error = 'Benutzername existiert bereits.';
                     debugWarning("Username already exists: " . $username);
                 } else {
-                    // Create new account
-                    $hashedPassword = hashPassword($password);
-                    debugLog("Creating new account with hashed password: " . $hashedPassword);
-                    
-                    $stmt = $db->prepare("INSERT INTO " . $tableName . " (username, sha_pass_hash, email, joindate) VALUES (?, ?, ?, NOW())");
-                    $result = $stmt->execute(array($username, $hashedPassword, $email));
-                    
+                    // SRP6 salt/verifier generieren
+                    require_once __DIR__ . '/includes/srp6.php';
+                    $salt = SRP6::generateSalt();
+                    $verifier = SRP6::calculateVerifier($username, $password, $salt);
+                    debugLog("SRP6 salt/verifier erzeugt");
+                    $stmt = $db->prepare("INSERT INTO " . $tableName . " (username, salt, verifier, email, joindate) VALUES (?, ?, ?, ?, NOW())");
+                    $result = $stmt->execute(array($username, $salt, $verifier, $email));
                     if ($result) {
-                        $success = 'Account erfolgreich erstellt! Sie können sich jetzt anmelden.';
+                        $success = 'Account erfolgreich erstellt! Sie können sich jetzt im WoW-Client anmelden.';
                         debugSuccess("Account created successfully for: " . $username);
                     } else {
                         $error = 'Registrierung fehlgeschlagen.';
@@ -161,22 +102,7 @@ $csrf_token = generateCSRFToken();
             
             <!-- Login Form -->
             <div id="login-tab" class="auth-tab active">
-                <form method="POST" class="auth-form">
-                    <input type="hidden" name="action" value="login">
-                    <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
-                    
-                    <div class="form-group">
-                        <label for="login-username">Benutzername</label>
-                        <input type="text" id="login-username" name="username" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="login-password">Passwort</label>
-                        <input type="password" id="login-password" name="password" required>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary btn-block">Anmelden</button>
-                </form>
+                <div class="alert alert-warning">Web-Login ist mit dieser TrinityCore-Version nicht möglich. Bitte nutze den WoW-Client.</div>
             </div>
             
             <!-- Register Form -->
