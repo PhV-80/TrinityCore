@@ -42,6 +42,11 @@ const DB_USER = 'ihr_mysql_benutzer';
 const DB_PASS = 'ihr_mysql_passwort';
 ```
 
+**Wichtig:** Die Anwendung erwartet folgende Datenbanknamen:
+- `wotlk_auth` (für Account-Verwaltung)
+- `wotlk_characters` (für Charakterdaten)
+- `wotlk_world` (für Spielwelt-Daten)
+
 ### 3. Apache2 Konfiguration
 
 Erstellen Sie eine Virtual Host Konfiguration:
@@ -63,27 +68,19 @@ Erstellen Sie eine Virtual Host Konfiguration:
 
 ### 4. .htaccess erstellen
 
-Erstellen Sie eine `.htaccess` Datei im Hauptverzeichnis:
-
-```apache
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php [QSA,L]
-
-# Security headers
-Header always set X-Content-Type-Options nosniff
-Header always set X-Frame-Options DENY
-Header always set X-XSS-Protection "1; mode=block"
-```
+Die `.htaccess` Datei ist bereits enthalten und konfiguriert für:
+- URL-Rewriting
+- Sicherheits-Header
+- Kompression
+- Caching
 
 ### 5. Datenbank-Tabelle für Logs erstellen
 
 Führen Sie folgendes SQL aus:
 
 ```sql
-USE auth;
-CREATE TABLE wotlk_account_log (
+USE wotlk_auth;
+CREATE TABLE account_log (
     id INT AUTO_INCREMENT PRIMARY KEY,
     account_id INT NOT NULL,
     action VARCHAR(255) NOT NULL,
@@ -101,6 +98,22 @@ CREATE TABLE wotlk_account_log (
 1. Öffnen Sie `http://ihre-domain.de/trinitycore-admin` im Browser
 2. Registrieren Sie sich mit einem neuen Account
 3. Melden Sie sich an und nutzen Sie das Dashboard
+
+### Debug-Modus
+
+Für die Entwicklung können Sie die Debug-Seite verwenden:
+
+```
+http://ihre-domain.de/trinitycore-admin/debug.php
+```
+
+Diese zeigt detaillierte Informationen über:
+- PHP-Konfiguration
+- Datenbankverbindungen
+- Tabellen-Tests
+- Funktions-Tests
+
+**Wichtig:** Entfernen Sie `debug.php` in der Produktion!
 
 ### Navigation
 
@@ -127,6 +140,7 @@ trinitycore-web-admin-php/
 ├── index.php                 # Login/Register
 ├── dashboard.php             # Hauptdashboard
 ├── logout.php                # Logout
+├── debug.php                 # Debug-Seite (Entwicklung)
 └── README.md
 ```
 
@@ -134,9 +148,9 @@ trinitycore-web-admin-php/
 
 Die Anwendung verbindet sich mit drei TrinityCore-Datenbanken:
 
-- **auth**: Account-Verwaltung und Authentifizierung
-- **characters**: Charakterdaten und Spielerinformationen
-- **world**: Spielwelt-Daten (Quests, Items, Kreaturen, etc.)
+- **wotlk_auth**: Account-Verwaltung und Authentifizierung
+- **wotlk_characters**: Charakterdaten und Spielerinformationen
+- **wotlk_world**: Spielwelt-Daten (Quests, Items, Kreaturen, etc.)
 
 ## Sicherheit
 
@@ -172,7 +186,8 @@ Bearbeiten Sie die CSS-Variablen in `assets/css/main.css`:
 
 1. **Datenbankverbindung fehlgeschlagen**
    - Überprüfen Sie die Einstellungen in `config/database.php`
-   - Stellen Sie sicher, dass der MySQL-Benutzer die richtigen Rechte hat
+   - Stellen Sie sicher, dass die Datenbanken `wotlk_auth`, `wotlk_characters`, `wotlk_world` existieren
+   - Überprüfen Sie MySQL-Benutzerrechte
 
 2. **Session-Probleme**
    - Überprüfen Sie die PHP-Session-Einstellungen
@@ -192,6 +207,13 @@ sudo tail -f /var/log/apache2/trinitycore-admin_error.log
 sudo tail -f /var/log/php/error.log
 ```
 
+### Debug-Informationen
+
+Verwenden Sie `debug.php` für detaillierte Fehlerdiagnose:
+- Datenbankverbindungen testen
+- Tabellen-Zugriff überprüfen
+- PHP-Konfiguration anzeigen
+
 ## Lizenz
 
 MIT License - Siehe LICENSE-Datei für Details.
@@ -199,11 +221,17 @@ MIT License - Siehe LICENSE-Datei für Details.
 ## Support
 
 Bei Problemen oder Fragen:
-1. Überprüfen Sie die Logs
-2. Stellen Sie sicher, dass alle Voraussetzungen erfüllt sind
-3. Testen Sie die Datenbankverbindung manuell
+1. Überprüfen Sie die Debug-Seite (`debug.php`)
+2. Überprüfen Sie die Logs
+3. Stellen Sie sicher, dass alle Voraussetzungen erfüllt sind
+4. Testen Sie die Datenbankverbindung manuell
 
 ## Changelog
+
+### Version 1.0.1
+- Korrigierte Datenbanknamen (wotlk_ Prefix vor Datenbanknamen)
+- Verbesserte Debug-Funktionalität
+- Detaillierte Fehlerbehandlung
 
 ### Version 1.0.0
 - Initiale Version

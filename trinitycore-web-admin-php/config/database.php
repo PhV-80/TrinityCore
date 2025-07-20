@@ -10,13 +10,10 @@ class DatabaseConfig {
     const DB_USER = 'trinity';  // Ändern Sie dies zu Ihrem MySQL Benutzer
     const DB_PASS = 'trinity';  // Ändern Sie dies zu Ihrem MySQL Passwort
     
-    // Database names
-    const DB_AUTH = 'auth';
-    const DB_CHARACTERS = 'characters';
-    const DB_WORLD = 'world';
-    
-    // Table prefixes
-    const PREFIX = 'wotlk_';
+    // Database names with prefix
+    const DB_AUTH = 'wotlk_auth';
+    const DB_CHARACTERS = 'wotlk_characters';
+    const DB_WORLD = 'wotlk_world';
     
     // Connection instances
     private static $authConnection = null;
@@ -122,12 +119,11 @@ class DatabaseConfig {
     }
     
     /**
-     * Get table name with prefix
+     * Get table name (no prefix needed, tables are in prefixed databases)
      */
     public static function getTableName($tableName) {
-        $fullTableName = self::PREFIX . $tableName;
-        self::debugLog("Getting table name: " . $tableName . " -> " . $fullTableName);
-        return $fullTableName;
+        self::debugLog("Getting table name: " . $tableName . " (no prefix needed)");
+        return $tableName;
     }
     
     /**

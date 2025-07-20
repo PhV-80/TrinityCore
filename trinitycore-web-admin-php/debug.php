@@ -23,7 +23,6 @@ echo "<p>User: " . DatabaseConfig::DB_USER . "</p>";
 echo "<p>Auth DB: " . DatabaseConfig::DB_AUTH . "</p>";
 echo "<p>Characters DB: " . DatabaseConfig::DB_CHARACTERS . "</p>";
 echo "<p>World DB: " . DatabaseConfig::DB_WORLD . "</p>";
-echo "<p>Prefix: " . DatabaseConfig::PREFIX . "</p>";
 
 echo "<h2>3. Database Connection Test</h2>";
 
