@@ -23,6 +23,13 @@ class SRP6 {
         return $verifier_bin;
     }
 
+    public static function getN() {
+        return self::$N_hex;
+    }
+    public static function getG() {
+        return self::$g_hex;
+    }
+
     private static function gmp2bin($num, $pad = 32) {
         $bin = gmp_export($num, 1, GMP_MSW_FIRST | GMP_NATIVE_ENDIAN);
         return str_pad($bin, $pad, "\0", STR_PAD_LEFT);

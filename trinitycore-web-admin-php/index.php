@@ -138,6 +138,7 @@ $csrf_token = generateCSRFToken();
     </div>
     
     <script src="assets/js/auth.js"></script>
+    <script src="assets/js/srp6.js"></script>
     <?php echo renderDebugPanel(); ?>
 </body>
 </html>
