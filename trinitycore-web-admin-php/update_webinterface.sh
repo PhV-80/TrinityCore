@@ -2,7 +2,7 @@
 # TrinityCore Webinterface Update Script
 
 # Variablen ggf. anpassen!
-REPO_DIR="/root/TrinityCore-WebAdmin"
+REPO_DIR="TrinityCore"
 WEB_DIR="/var/www/html/trinitycore-admin"
 
 cd "$REPO_DIR"
@@ -22,9 +22,9 @@ echo "[INFO] Änderungen gefunden, führe git pull aus..."
 git pull
 
 echo "[INFO] Kopiere Dateien ins Webverzeichnis..."
-cp -r . "$WEB_DIR"
+sudo cp -r trinitycore-web-admin-php . "$WEB_DIR"
 
 echo "[INFO] Setze Besitzer auf www-data..."
-chown -R www-data:www-data "$WEB_DIR"
+sudo chown -R www-data:www-data "$WEB_DIR"
 
 echo "[INFO] Update abgeschlossen."
