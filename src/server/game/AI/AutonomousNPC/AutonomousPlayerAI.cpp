@@ -35,7 +35,7 @@
 #include <algorithm>
 #include <chrono>
 
-// Konstanten fÃ¼r das Verhalten
+// Konstanten für das Verhalten
 constexpr uint32 BEHAVIOR_UPDATE_INTERVAL = 2000;   // 2 Sekunden
 constexpr uint32 LEARNING_UPDATE_INTERVAL = 5000;   // 5 Sekunden  
 constexpr uint32 SOCIAL_UPDATE_INTERVAL = 10000;    // 10 Sekunden
@@ -52,17 +52,13 @@ constexpr float SOCIAL_INTERACTION_DISTANCE = 15.0f;
 // Permissible - Required for AI Factory Registration
 int32 AutonomousPlayerAI::Permissible(Creature const* creature)
 {
+    TC_LOG_INFO("autonomous.npc", "Permissible aufgerufen für NPC {} mit AIName '{}'", creature->GetName(), creature->GetAIName());
     // Allow this AI for any creature with AIName "AutonomousPlayerAI"
     if (!creature)
         return PERMIT_BASE_NO;
         
     // Check if this creature has the AutonomousPlayerAI configured
     if (creature->GetAIName() == "AutonomousPlayerAI")
-        return PERMIT_BASE_SPECIAL;
-        
-    // Also allow for specific creature entries (90001-90010)
-    uint32 entry = creature->GetEntry();
-    if (entry >= 90001 && entry <= 90010)
         return PERMIT_BASE_SPECIAL;
         
     return PERMIT_BASE_NO;
@@ -105,7 +101,7 @@ AutonomousPlayerAI::~AutonomousPlayerAI()
     // Deregistriere NPC bei der Konfiguration
     AutonomousNPCConfig::NotifyNPCDespawned();
     
-    TC_LOG_INFO("autonomous.npc", "AutonomousPlayerAI: ZerstÃ¶re autonomen NPC {}", me->GetName());
+    TC_LOG_INFO("autonomous.npc", "AutonomousPlayerAI: Zerstöre autonomen NPC {}", me->GetName());
 }
 
 void AutonomousPlayerAI::Reset()
@@ -120,22 +116,23 @@ void AutonomousPlayerAI::Reset()
     m_totalManaUsed = 0;
     m_currentCombatSpells.clear();
     
-    TC_LOG_DEBUG("autonomous.npc", "AutonomousPlayerAI::Reset: NPC {} zurÃ¼ckgesetzt", me->GetName());
+    TC_LOG_DEBUG("autonomous.npc", "AutonomousPlayerAI::Reset: NPC {} zurückgesetzt", me->GetName());
 }
 
 void AutonomousPlayerAI::UpdateAI(uint32 diff)
 {
+    TC_LOG_INFO("autonomous.npc", "UpdateAI für AutonomousPlayerAI wird ausgeführt (NPC: {})", me->GetName());
     // Basis CreatureAI Update
     if (!UpdateVictim())
     {
-        // Kein Kampf - normale Verhaltensroutinen ausfÃ¼hren
+        // Kein Kampf - normale Verhaltensroutinen ausführen
         UpdateBehavior(diff);
         UpdateLearning(diff);
         UpdateSocialBehavior(diff);
     }
     else
     {
-        // Im Kampf - Kampf-KI ausfÃ¼hren
+        // Im Kampf - Kampf-KI ausführen
         m_currentState = BehaviorState::STATE_COMBAT;
         
         if (Unit* target = me->GetVictim())
@@ -144,7 +141,7 @@ void AutonomousPlayerAI::UpdateAI(uint32 diff)
         }
     }
     
-    // Phase progression prÃ¼fen
+    // Phase progression prüfen
     UpdatePhaseProgression();
 }
 
@@ -152,19 +149,19 @@ void AutonomousPlayerAI::InitializeAsNewCharacter()
 {
     TC_LOG_INFO("autonomous.npc", "AutonomousPlayerAI::InitializeAsNewCharacter: Initialisiere NPC {}", me->GetName());
     
-    // ZufÃ¤llige PersÃ¶nlichkeitsmerkmale generieren
+    // Zufällige Persönlichkeitsmerkmale generieren
     RandomizeCharacteristics();
     
     // Startphase setzen
     m_currentPhase = LearningPhase::PHASE_INITIALIZATION;
     m_currentState = BehaviorState::STATE_LEARNING;
     
-    // Grundlegende Chat-Phrasen hinzufÃ¼gen
+    // Grundlegende Chat-Phrasen hinzufügen
     m_socialMemory.learnedPhrases.push_back("Hallo!");
     m_socialMemory.learnedPhrases.push_back("Wie geht es dir?");
-    m_socialMemory.learnedPhrases.push_back("SchÃ¶nes Wetter heute.");
+    m_socialMemory.learnedPhrases.push_back("Schönes Wetter heute.");
     m_socialMemory.learnedPhrases.push_back("Viel Erfolg beim Abenteuer!");
-    m_socialMemory.learnedPhrases.push_back("FÃ¼r die Allianz!"); // Wird spÃ¤ter je nach Fraktion angepasst
+    m_socialMemory.learnedPhrases.push_back("Für die Allianz!"); // Wird später je nach Fraktion angepasst
     
     // Initial alle Rollen als gleich wahrscheinlich setzen
     for (int i = static_cast<int>(AutonomousRole::ROLE_DPS_MELEE); 
@@ -175,7 +172,7 @@ void AutonomousPlayerAI::InitializeAsNewCharacter()
     
     LoadLearningData();
     
-    TC_LOG_DEBUG("autonomous.npc", "NPC {} initialisiert mit PersÃ¶nlichkeit: Aggr={}, Cur={}, Soc={}, Int={}, Pat={}", 
+    TC_LOG_DEBUG("autonomous.npc", "NPC {} initialisiert mit Persönlichkeit: Aggr={}, Cur={}, Soc={}, Int={}, Pat={}", 
                  me->GetName(), m_aggressiveness, m_curiosity, m_sociability, m_intelligence, m_patience);
 }
 
@@ -185,10 +182,10 @@ void AutonomousPlayerAI::UpdateBehavior(uint32 diff)
     {
         m_behaviorUpdateTimer = BEHAVIOR_UPDATE_INTERVAL;
         
-        // Entscheide Ã¼ber nÃ¤chste Aktion
+        // Entscheide über nächste Aktion
         MakeAutonomousDecision();
         
-        // FÃ¼hre aktuelles Verhalten aus
+        // Führe aktuelles Verhalten aus
         switch (m_currentState)
         {
             case BehaviorState::STATE_IDLE:
@@ -204,7 +201,7 @@ void AutonomousPlayerAI::UpdateBehavior(uint32 diff)
                 ExecuteCraftingBehavior();
                 break;
             case BehaviorState::STATE_LEARNING:
-                // Spezielle LernaktivitÃ¤ten
+                // Spezielle Lernaktivitäten
                 EvaluateCurrentSituation();
                 break;
             default:
@@ -223,7 +220,7 @@ void AutonomousPlayerAI::UpdateLearning(uint32 diff)
     {
         m_learningUpdateTimer = LEARNING_UPDATE_INTERVAL;
         
-        // Bewerte RollenaffinitÃ¤ten basierend auf bisherigen Erfahrungen
+        // Bewerte Rollenaffinitäten basierend auf bisherigen Erfahrungen
         EvaluateRoleAffinity();
         
         // Optimiere Zauberrotation
@@ -250,7 +247,7 @@ void AutonomousPlayerAI::UpdateSocialBehavior(uint32 diff)
     {
         m_socialUpdateTimer = SOCIAL_UPDATE_INTERVAL;
         
-        // Suche nach InteraktionsmÃ¶glichkeiten
+        // Suche nach Interaktionsmöglichkeiten
         SeekNearbyInteractions();
         
         // Verarbeite nahestehende Spieler und NPCs
@@ -260,7 +257,7 @@ void AutonomousPlayerAI::UpdateSocialBehavior(uint32 diff)
         // Gelegentlich chatten
         if (m_chatTimer <= diff && m_sociability > 30)
         {
-            m_chatTimer = CHAT_INTERVAL + urand(0, 15000); // ZufÃ¤llige Variation
+            m_chatTimer = CHAT_INTERVAL + urand(0, 15000); // Zufällige Variation
             if (urand(1, 100) <= m_sociability)
             {
                 SendRandomChat();
@@ -323,7 +320,7 @@ void AutonomousPlayerAI::EnterEvadeMode(EvadeReason why)
     }
     
     m_currentState = BehaviorState::STATE_RESTING;
-    TC_LOG_DEBUG("autonomous.npc", "NPC {} verlÃ¤sst Kampf. Grund: {}", me->GetName(), static_cast<uint32>(why));
+    TC_LOG_DEBUG("autonomous.npc", "NPC {} verlässt Kampf. Grund: {}", me->GetName(), static_cast<uint32>(why));
 }
 
 void AutonomousPlayerAI::MoveInLineOfSight(Unit* who)
@@ -386,7 +383,7 @@ void AutonomousPlayerAI::AnalyzeCombatResult(bool victory, Unit* opponent)
     // Speichere in Historie
     m_combatHistory.push_back(experience);
     
-    // Halte Historie Ã¼berschaubar (letzte 50 KÃ¤mpfe)
+    // Halte Historie überschaubar (letzte 50 Kämpfe)
     if (m_combatHistory.size() > 50)
     {
         m_combatHistory.erase(m_combatHistory.begin());
@@ -413,7 +410,7 @@ void AutonomousPlayerAI::LearnFromCombat(const CombatExperience& experience)
     float totalTime = m_learningData.averageCombatTime * (m_learningData.totalCombats - 1) + experience.combatDuration;
     m_learningData.averageCombatTime = totalTime / m_learningData.totalCombats;
     
-    // Lerne ZaubereffektivitÃ¤t
+    // Lerne Zaubereffektivität
     for (uint32 spellId : experience.spellsUsed)
     {
         auto it = experience.spellEffectiveness.find(spellId);
@@ -425,7 +422,7 @@ void AutonomousPlayerAI::LearnFromCombat(const CombatExperience& experience)
         }
     }
     
-    TC_LOG_DEBUG("autonomous.npc", "NPC {} lernt aus Kampf: Siege={}, Niederlagen={}, Ã˜-Zeit={:.1f}ms", 
+    TC_LOG_DEBUG("autonomous.npc", "NPC {} lernt aus Kampf: Siege={}, Niederlagen={}, Ø-Zeit={:.1f}ms", 
                  me->GetName(), m_learningData.wins, m_learningData.losses, m_learningData.averageCombatTime);
 }
 
@@ -433,26 +430,26 @@ void AutonomousPlayerAI::EvaluateRoleAffinity()
 {
     uint32 level = me->GetLevel();
     
-    // Bewerte RollenaffinitÃ¤t basierend auf Kampfstatistiken
+    // Bewerte Rollenaffinität basierend auf Kampfstatistiken
     if (m_learningData.totalCombats > 0)
     {
         float winRate = static_cast<float>(m_learningData.wins) / m_learningData.totalCombats;
         
-        // Tank-AffinitÃ¤t: Basiert auf Ã¼berstandenem Schaden
+        // Tank-Affinität: Basiert auf überstandenem Schaden
         if (m_totalDamageTaken > 0)
         {
             float survivability = static_cast<float>(m_totalHealingDone) / m_totalDamageTaken;
             m_learningData.roleAffinities[AutonomousRole::ROLE_TANK] += survivability * 5.0f;
         }
         
-        // Heiler-AffinitÃ¤t: Basiert auf Heilung
+        // Heiler-Affinität: Basiert auf Heilung
         if (m_totalHealingDone > 0)
         {
             m_learningData.roleAffinities[AutonomousRole::ROLE_HEALER] += 
                 (static_cast<float>(m_totalHealingDone) / 1000.0f) * winRate;
         }
         
-        // DPS-AffinitÃ¤t: Basiert auf Schaden
+        // DPS-Affinität: Basiert auf Schaden
         if (m_totalDamageDealt > 0)
         {
             float dpsScore = (static_cast<float>(m_totalDamageDealt) / 1000.0f) * winRate;
@@ -461,12 +458,12 @@ void AutonomousPlayerAI::EvaluateRoleAffinity()
             m_learningData.roleAffinities[AutonomousRole::ROLE_DPS_CASTER] += dpsScore;
         }
         
-        // Explorer-AffinitÃ¤t: Basiert auf besuchten Zonen
+        // Explorer-Affinität: Basiert auf besuchten Zonen
         float explorationScore = static_cast<float>(m_learningData.visitedZones.size()) * 2.0f;
         m_learningData.roleAffinities[AutonomousRole::ROLE_EXPLORER] += explorationScore;
     }
     
-    // Bestimme primÃ¤re Rolle basierend auf hÃ¶chster AffinitÃ¤t
+    // Bestimme primäre Rolle basierend auf höchster Affinität
     if (level >= ROLE_DISCOVERY_MIN_LEVEL)
     {
         AutonomousRole newRole = DetermineOptimalRole();
@@ -537,7 +534,7 @@ void AutonomousPlayerAI::ExecuteIdleBehavior()
     // Gelegentlich den Zustand wechseln
     if (urand(1, 100) <= m_curiosity)
     {
-        // Neue AktivitÃ¤t basierend auf PersÃ¶nlichkeit wÃ¤hlen
+        // Neue Aktivität basierend auf Persönlichkeit wählen
         std::vector<BehaviorState> possibleStates;
         
         if (m_curiosity > 60)
@@ -562,7 +559,7 @@ void AutonomousPlayerAI::ExecuteExplorationBehavior()
     {
         m_explorationTimer = EXPLORATION_INTERVAL;
         
-        // WÃ¤hle zufÃ¤lligen Punkt in der NÃ¤he
+        // Wähle zufälligen Punkt in der Nähe
         float x, y, z;
         me->GetPosition(x, y, z);
         
@@ -590,7 +587,7 @@ void AutonomousPlayerAI::ExecuteExplorationBehavior()
         }
     }
     
-    // ZurÃ¼ck zu IDLE nach Exploration
+    // Zurück zu IDLE nach Exploration
     if (urand(1, 100) <= 20) // 20% Chance
     {
         m_currentState = BehaviorState::STATE_IDLE;
@@ -602,7 +599,7 @@ void AutonomousPlayerAI::ExecuteSocialBehavior()
     // Versuche mit nahestehenden Spielern zu interagieren
     // Dies wird in ProcessNearbyPlayers() implementiert
     
-    // Kehre nach einer Weile zu IDLE zurÃ¼ck
+    // Kehre nach einer Weile zu IDLE zurück
     if (urand(1, 100) <= 30)
     {
         m_currentState = BehaviorState::STATE_IDLE;
@@ -611,8 +608,8 @@ void AutonomousPlayerAI::ExecuteSocialBehavior()
 
 void AutonomousPlayerAI::ExecuteCraftingBehavior()
 {
-    // Hier kÃ¶nnte spÃ¤ter Berufe-Interaktion implementiert werden
-    // FÃ¼r jetzt zurÃ¼ck zu IDLE
+    // Hier könnte später Berufe-Interaktion implementiert werden
+    // Für jetzt zurück zu IDLE
     m_currentState = BehaviorState::STATE_IDLE;
 }
 
@@ -629,7 +626,7 @@ bool AutonomousPlayerAI::ShouldEngageTarget(Unit* target)
     if (me->IsFriendlyTo(target))
         return false;
         
-    // Level-Unterschied prÃ¼fen
+    // Level-Unterschied prüfen
     int32 levelDiff = static_cast<int32>(target->GetLevel()) - static_cast<int32>(me->GetLevel());
     
     // Aggressiveness beeinflusst Bereitschaft schwierigere Gegner anzugreifen
@@ -638,7 +635,7 @@ bool AutonomousPlayerAI::ShouldEngageTarget(Unit* target)
     if (levelDiff > maxLevelDiff)
         return false;
         
-    // Distanz prÃ¼fen
+    // Distanz prüfen
     if (me->GetDistance(target) > COMBAT_ENGAGE_DISTANCE)
         return false;
         
@@ -655,7 +652,7 @@ void AutonomousPlayerAI::RandomizeCharacteristics()
     m_intelligence = dist(m_randomGenerator);
     m_patience = dist(m_randomGenerator);
     
-    // Sorge fÃ¼r ausgewogene PersÃ¶nlichkeiten (nicht alle Werte extrem)
+    // Sorge für ausgewogene Persönlichkeiten (nicht alle Werte extrem)
     uint8 total = m_aggressiveness + m_curiosity + m_sociability + m_intelligence + m_patience;
     if (total > 350) // Zu hoch, reduziere Extremwerte
     {
@@ -670,15 +667,15 @@ void AutonomousPlayerAI::RandomizeCharacteristics()
 void AutonomousPlayerAI::SaveLearningData()
 {
     // TODO: Implementiere Persistierung in Datenbank
-    // FÃ¼r jetzt nur Debug-Ausgabe
-    TC_LOG_DEBUG("autonomous.npc", "Speichere Lerndaten fÃ¼r NPC {}: KÃ¤mpfe={}, Siege={}", 
+    // Für jetzt nur Debug-Ausgabe
+    TC_LOG_DEBUG("autonomous.npc", "Speichere Lerndaten für NPC {}: Kämpfe={}, Siege={}", 
                  me->GetName(), m_learningData.totalCombats, m_learningData.wins);
 }
 
 void AutonomousPlayerAI::LoadLearningData()
 {
     // TODO: Implementiere Laden aus Datenbank
-    TC_LOG_DEBUG("autonomous.npc", "Lade Lerndaten fÃ¼r NPC {}", me->GetName());
+    TC_LOG_DEBUG("autonomous.npc", "Lade Lerndaten für NPC {}", me->GetName());
 }
 
 void AutonomousPlayerAI::SendRandomChat()
@@ -702,23 +699,23 @@ void AutonomousPlayerAI::ProcessChatMessage(Player* sender, const std::string& m
     // Lerne neue Phrasen aus Spielernachrichten
     if (message.length() > 3 && message.length() < 50)
     {
-        // Einfache Filterung fÃ¼r angemessene Nachrichten
+        // Einfache Filterung für angemessene Nachrichten
         bool isAppropriate = true;
         std::string lowerMsg = message;
         std::transform(lowerMsg.begin(), lowerMsg.end(), lowerMsg.begin(), ::tolower);
         
-        // Hier kÃ¶nnten weitere Filter implementiert werden
+        // Hier könnten weitere Filter implementiert werden
         
         if (isAppropriate)
         {
-            // FÃ¼ge Phrase hinzu wenn noch nicht bekannt
+            // Füge Phrase hinzu wenn noch nicht bekannt
             if (std::find(m_socialMemory.learnedPhrases.begin(), 
                           m_socialMemory.learnedPhrases.end(), message) 
                 == m_socialMemory.learnedPhrases.end())
             {
                 m_socialMemory.learnedPhrases.push_back(message);
                 
-                // Behalte Liste Ã¼berschaubar
+                // Behalte Liste überschaubar
                 if (m_socialMemory.learnedPhrases.size() > 100)
                 {
                     m_socialMemory.learnedPhrases.erase(m_socialMemory.learnedPhrases.begin());
@@ -750,7 +747,7 @@ void AutonomousPlayerAI::RespondToPlayer(Player* player, const std::string& cont
     if (!player || m_socialMemory.learnedPhrases.empty())
         return;
         
-    // WÃ¤hle angemessene Antwort basierend auf Kontext und Beziehung
+    // Wähle angemessene Antwort basierend auf Kontext und Beziehung
     int32 relationship = 0;
     auto it = m_socialMemory.relationshipValues.find(player->GetGUID());
     if (it != m_socialMemory.relationshipValues.end())
@@ -760,12 +757,12 @@ void AutonomousPlayerAI::RespondToPlayer(Player* player, const std::string& cont
     
     std::vector<std::string> possibleResponses;
     
-    // Freundliche Antworten fÃ¼r gute Beziehungen
+    // Freundliche Antworten für gute Beziehungen
     if (relationship > 20)
     {
         possibleResponses.push_back("Das ist interessant!");
         possibleResponses.push_back("Ich stimme zu.");
-        possibleResponses.push_back("Danke fÃ¼r die Information.");
+        possibleResponses.push_back("Danke für die Information.");
     }
     
     // Neutrale Antworten
@@ -804,13 +801,13 @@ void AutonomousPlayerAI::UpdatePhaseProgression()
 
 void AutonomousPlayerAI::SelectBestSpell(Unit* target)
 {
-    // Einfache Zauberauswahl basierend auf gelernten PrÃ¤ferenzen
+    // Einfache Zauberauswahl basierend auf gelernten Präferenzen
     // TODO: Erweiterte Logik basierend auf Rolle und Lerndaten
     
     if (!target)
         return;
         
-    // FÃ¼r jetzt: Standard Angriff
+    // Für jetzt: Standard Angriff
     me->AttackerStateUpdate(target);
 }
 
@@ -825,7 +822,7 @@ void AutonomousPlayerAI::EvaluateCurrentSituation()
     // Basierend auf Situation Verhalten anpassen
     if (nearbyEnemies > 0 && m_aggressiveness > 60)
     {
-        m_currentState = BehaviorState::STATE_EXPLORING; // Suche KÃ¤mpfe
+        m_currentState = BehaviorState::STATE_EXPLORING; // Suche Kämpfe
     }
     else if (nearbyPlayers > 0 && m_sociability > 50)
     {
@@ -843,16 +840,16 @@ void AutonomousPlayerAI::MakeAutonomousDecision()
         
     m_lastDecisionTime = currentTime;
     
-    // Entscheidungslogik basierend auf PersÃ¶nlichkeit und Situation
+    // Entscheidungslogik basierend auf Persönlichkeit und Situation
     std::vector<std::pair<BehaviorState, uint32>> options;
     
-    // Gewichte basierend auf PersÃ¶nlichkeitsmerkmalen
+    // Gewichte basierend auf Persönlichkeitsmerkmalen
     options.push_back({BehaviorState::STATE_IDLE, m_patience});
     options.push_back({BehaviorState::STATE_EXPLORING, m_curiosity});
     options.push_back({BehaviorState::STATE_SOCIALIZING, m_sociability});
     options.push_back({BehaviorState::STATE_LEARNING, m_intelligence});
     
-    // WÃ¤hle Option basierend auf Gewichtung
+    // Wähle Option basierend auf Gewichtung
     uint32 totalWeight = 0;
     for (const auto& option : options)
     {
@@ -882,7 +879,7 @@ void AutonomousPlayerAI::MakeAutonomousDecision()
 
 uint32 AutonomousPlayerAI::CalculateSpellEffectiveness(uint32 spellId, Unit* target)
 {
-    // TODO: Implementiere ZaubereffektivitÃ¤tsberechnung
+    // TODO: Implementiere Zaubereffektivitätsberechnung
     return 50; // Platzhalter
 }
 
@@ -899,7 +896,7 @@ bool AutonomousPlayerAI::IsInSafeZone() const
 
 void AutonomousPlayerAI::SeekNearbyInteractions()
 {
-    // TODO: Implementiere aktive Suche nach InteraktionsmÃ¶glichkeiten
+    // TODO: Implementiere aktive Suche nach Interaktionsmöglichkeiten
 }
 
 void AutonomousPlayerAI::ProcessNearbyCreatures()
